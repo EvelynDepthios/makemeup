@@ -130,7 +130,7 @@ git push pws main
 
 
 ## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html ##
-<img src = "images/bagan_django.png">
+<img src = "make-me-up/images/bagan_django.png">
 
 
 ## Jelaskan fungsi git dalam pengembangan perangkat lunak! ##
