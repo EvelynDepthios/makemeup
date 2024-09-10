@@ -130,8 +130,9 @@ git push pws main
 
 
 ## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html ##
-<img src = "make-me-up/images/bagan_django.png">
-
+<img src = "/images/bagan_django.png">
+Diagram tersebut menggambarkan alur siklus request-response dalam aplikasi web Django. Ketika klien mengirimkan permintaan (request), permintaan tersebut pertama kali diterima oleh urls.py, yang bertanggung jawab untuk memetakan URL yang diminta ke fungsi yang sesuai di views.py. Fungsi dalam views.py kemudian memproses permintaan tersebut; jika membutuhkan data dari basis data, fungsi ini akan berinteraksi dengan models.py, yang merupakan representasi dari struktur basis data dan berfungsi sebagai ORM (Object-Relational Mapping). Setelah data diperoleh, views.py mengirimkan data tersebut ke template HTML untuk dirender. Template tersebut kemudian menghasilkan halaman web yang akan dikirim kembali sebagai respons ke klien, menyelesaikan siklus komunikasi
+Source : PPT Fasilkom UI, https://intellipaat.com/blog/tutorial/python-django-tutorial/
 
 ## Jelaskan fungsi git dalam pengembangan perangkat lunak! ##
 Git adalah sistem kontrol versi yang berfungsi untuk:
@@ -139,17 +140,18 @@ Git adalah sistem kontrol versi yang berfungsi untuk:
 2. Kolaborasi: Git memungkinkan beberapa pengembang bekerja pada proyek yang sama secara bersamaan tanpa bentrok, karena masing-masing bisa bekerja di branch terpisah.
 3. Branching dan Merging: Pengembang dapat bekerja di fitur atau bagian kode yang berbeda secara paralel dan kemudian menggabungkannya (merge) ketika siap.
 4. Revert Perubahan: Jika ada kesalahan pada versi terbaru, Git memungkinkan kita untuk kembali ke versi sebelumnya dengan mudah.
-
+Source : https://dcloud.co.id/blog/apa-itu-git.html
 
 ## Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak? ##
 1. Framework yang Komprehensif: Django menyediakan banyak fitur bawaan yang sangat membantu bagi pemula, seperti autentikasi, manajemen user, serta ORM untuk database.
 2. Konvensi Berbasis Konfigurasi: Django menyediakan banyak aturan dan praktik terbaik yang membuat pengembang tidak perlu melakukan konfigurasi berlebihan.
 3. Documentasi yang Baik: Django memiliki dokumentasi yang lengkap dan jelas, sehingga memudahkan pemula dalam belajar.
 4. Keamanan Bawaan: Django memiliki fitur keamanan bawaan yang melindungi dari ancaman umum seperti SQL Injection dan Cross-Site Scripting (XSS).
-
+Source : https://www.jagoanhosting.com/blog/django/
 
 ## Mengapa model pada Django disebut sebagai ORM? ##
 ORM (Object-Relational Mapping) adalah teknik yang memungkinkan kita berinteraksi dengan database menggunakan objek Python, tanpa harus menulis query SQL secara langsung. Model Django disebut sebagai ORM karena:
 1. Representasi Data sebagai Objek: Setiap tabel di database direpresentasikan sebagai kelas Python, dan setiap baris pada tabel tersebut adalah objek dari kelas tersebut.
 2. Abstraksi Database: Kita tidak perlu menulis query SQL secara manual. Django ORM akan secara otomatis menerjemahkan operasi Python ke dalam query SQL yang sesuai.
 3. Dukungan untuk Berbagai Database: ORM memungkinkan kita berpindah dari satu database ke database lainnya tanpa mengubah kode Python, hanya dengan mengubah konfigurasi di `settings.py`.
+Source : https://rumahcoding.co.id/pengantar-django-orm-memahami-dan-menggunakan-model-dalam-django/
