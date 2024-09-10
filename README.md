@@ -1,6 +1,6 @@
-Nama        : Evelyn Depthios
-NPM         : 2306207543
-Kelas       : PBP F
+Nama        : Evelyn Depthios <br />
+NPM         : 2306207543 <br />
+Kelas       : PBP F <br />
 
 Link : 
 
