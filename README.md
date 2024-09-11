@@ -130,7 +130,8 @@ git push pws main
 
 
 ## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html ##
-<img src = "/images/bagan_django.png">
+![image](https://github.com/user-attachments/assets/b4791769-68e1-465f-a5c8-749fce13046c)
+
 Diagram tersebut menggambarkan alur siklus request-response dalam aplikasi web Django. Ketika klien mengirimkan permintaan (request), permintaan tersebut pertama kali diterima oleh urls.py, yang bertanggung jawab untuk memetakan URL yang diminta ke fungsi yang sesuai di views.py. Fungsi dalam views.py kemudian memproses permintaan tersebut; jika membutuhkan data dari basis data, fungsi ini akan berinteraksi dengan models.py, yang merupakan representasi dari struktur basis data dan berfungsi sebagai ORM (Object-Relational Mapping). Setelah data diperoleh, views.py mengirimkan data tersebut ke template HTML untuk dirender. Template tersebut kemudian menghasilkan halaman web yang akan dikirim kembali sebagai respons ke klien, menyelesaikan siklus komunikasi
 Source : PPT Fasilkom UI, https://intellipaat.com/blog/tutorial/python-django-tutorial/
 
