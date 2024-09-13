@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-#mrf76@xonri7f*vsdz-w20cm@)&(i-v4%bi094)sddz^4o!51
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1","evelyn-depthios-makemeup.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1","evelyn-depthios-makemeup2.pbp.cs.ui.ac.id"]
 
 # Application definition
 
@@ -122,4 +122,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://evelyn-depthios-makemeup.pbp.cs.ui.ac.id", "https://evelyn-depthios-makemeup.pbp.cs.ui.ac.id"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id", "https://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id"]
