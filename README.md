@@ -2,7 +2,7 @@ Nama        : Evelyn Depthios <br />
 NPM         : 2306207543 <br />
 Kelas       : PBP F <br />
 
-Link : 
+Link : http://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id
 
 # Tugas 2
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial) ##
