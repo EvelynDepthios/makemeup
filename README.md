@@ -212,6 +212,7 @@ Source : https://docs.djangoproject.com/en/5.1/howto/csrf/, https://docs.djangop
 
 ##  Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md. ## 
 ### XML ###
+https://github.com/EvelynDepthios/makemeup/blob/main/images/ss_xml.png
 
 ### XML by ID 1 ###
 
