@@ -208,8 +208,162 @@ Jika kita tidak menambahkan `csrf_token`, penyerang bisa memanfaatkan sesi login
 Source : https://docs.djangoproject.com/en/5.1/howto/csrf/, https://docs.djangoproject.com/en/5.1/ref/csrf/
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step. ##
+### Membuat input form untuk menambahkan objek model pada app sebelumnya. ###
+1. Membuat berkas baru pada direktori `main` dengan nama `forms.py` sebagai struktur yang dapat menerima data *Product* baru.
+2. Isi file `forms.py` dengan kode berikut:
+```python
+from django.forms import ModelForm
+from main.models import Product
 
+class CreateProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "price", "description", "category", "ratings"]
+```
+Model menunjukkan model yang digunakan dalam *form* dan fields menunjukkan *field* dari model yang digunakan.
+3. Buka file `views.py` yang ada pada direktori main dan tambahkan beberapa import pada bagian paling atas.
+```python
+from django.shortcuts import render, redirect
+from main.forms import CreateProductForm
+from main.models import Product
+```
+4. Masih pada file yang sama, tambahkan juga *function* baru dengan nama `create_product_form` untuk menerima request. *Function* tersebut akan memvalidasi input form dan menyimpan data dari *form* tersebut.
 
+``` python
+def create_product_form(request):
+    form = CreateProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect('main:show_main')
+
+    context = {'form': form}
+    return render(request, "create_product_form.html", context)
+```
+5. Lalu ubah fungsi `show_main` yang sudah ada pada berkas `views.py` menjadi seperti berikut.
+```python
+def show_main(request):
+    main_products = [
+        ...
+    ]
+    product_entries = Product.objects.all()
+
+    new_products = [{'name': Product.name, 'price': Product.price, 'description': Product.description, 'category': Product.category, 'ratings' : Product.ratings} for Product in product_entries]
+    
+    all_products = main_products + new_products
+    
+    return render(request, 'main.html', {'products': all_products})
+```
+`Product.objects.all()` akan mengambil seluruh *Object* Product yang ada pada *database*
+6. Buka `urls.py` yang ada pada direktori main dan import fungsi create_product_form yang telah dibuat. `from main.views import show_main, create_product_form`
+7. Tambahkan juga path URL ke dalam variabel urlpatterns pada urls.py di folder main untuk mengakses fungsi yang sudah di-import sebelumnya.
+``` python
+urlpatterns = [
+   ...
+    path('create-product-form', create_product_form, name='create_product_form'),
+]
+```
+8. Buat file dengan nama `create_product_form.html` pada direktori `main/templates` dan isi dengan kode berikut:
+```python
+{% extends 'base.html' %}
+{% block content %}
+<h1>Add New Product Entry</h1>
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div>
+    <input type="submit" value="Add New Product" />
+  </div>
+</form>
+
+{% endblock %}
+```
+`<form method="POST">` sebagai *block* untuk *form* deengan metode POST.
+`{% csrf_token %}` token yang di-*generate* secara otomatis oleh Django sebagai *security*
+`{{ form.as_p }}` menampilkan fields yang sudah dibuat di `forms.py` dalam paragraf
+`<input type="submit" value="Add New Product"/>` membuat tombol *submit* untuk mengirimkan *request* ke *function* `create_product_form` di `views.py`
+9. Buka file `main.html` dan tambahkan tampilan data produk serta tombol untuk menambahkan produk baru yang akan *redirect* ke halaman *form* melalui penambahan kode berikut ke dalam bagian `{% block content %}`.
+```html
+    ...
+    <div>
+        {% for product in products %}
+        <div>
+            <!-- Nama Produk -->
+            <div><strong>{{ product.name }}</strong>
+            </div>
+            <!-- Harga Produk -->
+            <div>Rp {{ product.price }}</div>
+            <!-- Deskripsi Produk -->
+            <div>{{ product.description }}</div>
+            <!-- Kategori Produk -->
+            <div>Category: {{ product.category }}</div>
+            <!-- Rating Kondisi Produk -->
+            <div>Ratings: {{ product.ratings }}/10</div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+</body>
+<a href="{% url 'main:create_product_form' %}">
+  <button>Add New Product Entry</button>
+</a>
+<br />
+{% endblock content %}
+```
+
+### Tambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+Buka file `views.py` di folder `main` dan tamabhkan beberapa *import* melalui kode berikut:
+```python
+from django.http import HttpResponse
+from django.core import serializers
+```
+#### XML ####
+Buat sebuah *function* baru yang menerima parameter request dengan nama `show_xml` dan sebuah variabel di dalam fungsi tersebut yang menyimpan hasil query dari seluruh data yang ada pada Product. Tambahkan juga return *function* `HttpResponse` yang berisi parameter data hasil query yang sudah diubah menjadi XML dan parameter `content_type="application/xml`.
+```python
+def show_xml(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```
+
+#### JSON ####
+Buat sebuah *function* yang menerima parameter request dengan nama `show_json` dan sebuah variabel di dalam *function* tersebut yang menyimpan hasil query dari seluruh data Product. Tambahkan juga return *function* berupa `HttpResponse` yang berisi parameter data hasil query yang sudah diubah menjadi JSON dan parameter `content_type="application/json"`.
+```python
+def show_json(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+
+#### XML by ID ####
+Buat sebuah *function* yang menerima parameter *request* dan id dengan nama `show_xml_by_id` dan buat variabel di dalam *function* tersebut yang menyimpan hasil query dari Product sesuai dengan id. Tambahkan juga return *function* berupa `HttpResponse` yang berisi parameter data hasil query yang sudah diubah menjadi XML dan parameter `content_type="application/xml"`.
+```python
+def show_xml_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```
+
+#### JSON by ID ####
+Buat sebuah *function* yang menerima parameter *request* dan id dengan nama `show_json_by_id` dan buat variabel di dalam *function* tersebut yang menyimpan hasil query dari Product sesuai dengan id. Tambahkan juga return *function* berupa `HttpResponse` yang berisi parameter data hasil query yang sudah diubah menjadi JSON dan parameter `content_type="application/json"`.
+```python
+def show_json_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+### Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2. ###
+1. Buka `urls.py` di dalam folder `main` dan *import* fungsi yang sudah dibuat.
+```python
+from main.views import show_main, create_product_form, show_xml, show_json, show_xml_by_id, show_json_by_id
+```
+2. Tambahkan juga path URL ke dalam `urlpattern` di file `urls.py` untuk mengakses *function* yang sudah dibuat dan di-import melalui kode berikut:
+```python
+urlpatterns = [
+    ...
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+]
+```
 ##  Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md. ## 
 ### XML ###
 ![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/ss_xml.png)

@@ -37,35 +37,9 @@
     </div>
 </body>
 
-<!-- {% if not product_entries %} -->
-
-<!-- {% else %} -->
-<table>
-  <tr>
-    <th>Product Name</th>
-    <th>Price</th>
-    <th>Description</th>
-    <th>Category</th>
-    <th>Ratings</th>
-
-  </tr>
- 
-  {% for product in product_entries %}
-  <tr>
-    <td>{{product.name}}</td>
-    <td>{{product.price}}</td>
-    <td>{{product.description}}</td>
-    <td>{{product.category}}</td>
-    <td>{{product.ratings}}</td>
-
-  </tr>
-  <!-- {% endfor %} -->
-</table>
-<!-- {% endif %} -->
-
-<br />
-
 <a href="{% url 'main:create_product_form' %}">
   <button>Add New Product Entry</button>
 </a>
+<br />
+
 {% endblock content %}
