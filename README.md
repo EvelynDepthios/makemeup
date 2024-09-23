@@ -8,6 +8,8 @@ Link : http://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id
 
 [Tugas 3](#tugas-3)
 
+[Tugas 4](#tugas-4)
+
 
 # Tugas 2 #
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial) ##
@@ -376,3 +378,26 @@ urlpatterns = [
 
 ### JSON by ID 2 ###
 ![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/ss_json2.png)
+
+
+# Tugas 4 #
+##  Apa perbedaan antara HttpResponseRedirect() dan redirect() ##
+- `HttpResponseRedirect()` adalah kelas yang digunakan untuk melakukan redirect secara manual dengan memberikan URL tujuan sebagai argumen.
+- `redirect()` adalah shortcut dari Django yang mempermudah pembuatan HTTP redirect, karena dapat menerima URL, objek, atau nama URL, dan secara otomatis mengarahkan ke lokasi yang tepat tanpa memerlukan URL string.
+Source : https://realpython.com/django-redirects/
+
+##  Jelaskan cara kerja penghubungan model Product dengan User! ##
+Untuk menghubungkan model `Product` dengan `User` menggunakan relasi `ForeignKey`, yang memungkinkan setiap produk yang dibuat untuk diasosiasikan dengan pengguna tertentu. Berikut adalah langkah-langkah bagaimana model `Product` dihubungkan dengan model `User`:
+1. 
+
+##  Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut. ##
+- Authentication adalah proses memverifikasi identitas pengguna, biasanya dilakukan dengan mencocokkan username dan password.
+- Authorization adalah proses memeriksa apakah pengguna yang telah terautentikasi memiliki izin untuk mengakses sumber daya tertentu.
+Ketika pengguna login, Django memverifikasi kredensial mereka (authentication). Setelah login, Django menentukan hak akses pengguna ke halaman dan fungsionalitas tertentu berdasarkan izin yang terkait dengan akun pengguna (authorization).
+Source : https://www.onelogin.com/learn/authentication-vs-authorization#:~:text=Authentication%20and%20authorization%20are%20two,authorization%20determines%20their%20access%20rights.
+
+##  Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan? ##
+Django mengingat pengguna yang telah login melalui sesi yang disimpan dalam cookies. Setiap kali pengguna login, Django membuat sesi baru dan menyimpan ID sesi tersebut di cookies pada browser pengguna. Cookies juga dapat digunakan untuk menyimpan informasi lain, seperti preferensi pengguna atau pelacakan aktivitas pengguna. Namun, tidak semua cookies aman. Misalnya, cookies yang tidak dienkripsi dapat dengan mudah diakses oleh pihak ketiga. Oleh karena itu, Django menyarankan menggunakan HttpOnly dan Secure flags pada cookies untuk keamanan tambahan.
+Source : https://www.cnbcindonesia.com/tech/20220325141305-37-326052/mengenal-apa-itu-cookie-browser-dan-cara-mengelolanya
+
+##  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial). ##

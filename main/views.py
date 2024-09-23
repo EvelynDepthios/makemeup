@@ -1,9 +1,17 @@
+from datetime import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from main.forms import CreateProductForm
+from main.models import Product
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
-from main.forms import CreateProductForm
-from main.models import Product
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login')
 def show_main(request):
     # Data produk didefinisikan secara manual dalam bentuk list of dictionaries
     main_products = [
@@ -30,24 +38,70 @@ def show_main(request):
         },
     ]
 
-    product_entries = Product.objects.all()
+    # Fetching products from the database
+    product_entries = Product.objects.filter(user=request.user)
 
-    new_products = [{'name': Product.name, 'price': Product.price, 'description': Product.description, 'category': Product.category, 'ratings' : Product.ratings} for Product in product_entries]
-    
+    # Merging manual data with database data
+    new_products = [{'name': prod.name, 'price': prod.price, 'description': prod.description, 'category': prod.category, 'ratings': prod.ratings} for prod in product_entries]
+
     all_products = main_products + new_products
-    
-    # Data diteruskan ke template
-    return render(request, 'main.html', {'products': all_products})
+
+    # Creating context to pass to the template
+    context = {
+        'nama': request.user.username,
+        'kelas': 'PBP F',
+        'products': all_products,
+        'last_login': request.COOKIES['last_login'],
+    }
+
+    # Rendering the main template
+    return render(request, 'main.html', context)
 
 def create_product_form(request):
     form = CreateProductForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        form.save()
+        product = form.save(commit=False)
+        product.user = request.user  # Assign the product to the logged-in user
+        product.save()
         return redirect('main:show_main')
 
     context = {'form': form}
     return render(request, "create_product_form.html", context)
+
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form': form}
+    return render(request, 'register.html', context)
+
+def login_user(request):
+   if request.method == 'POST':
+      form = AuthenticationForm(data=request.POST)
+
+      if form.is_valid():
+        user = form.get_user()
+        login(request, user)
+        response = HttpResponseRedirect(reverse("main:show_main"))
+        response.set_cookie('last_login', str(datetime.now()))
+        return response
+
+   else:
+      form = AuthenticationForm(request)
+   context = {'form': form}
+   return render(request, 'login.html', context)
+
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
 
 def show_xml(request):
     data = Product.objects.all()

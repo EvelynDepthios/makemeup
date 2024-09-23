@@ -2,6 +2,7 @@
 {% block content %}
 
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,34 +13,50 @@
     <header>
         <h1>MAKEmeUP - Product List</h1>
         <div>
-            <p>Nama: Evelyn Depthios</p>
-            <p>Kelas: PBP F</p>
+            <p>Nama: {{ nama }}</p> <!-- Nama diambil dari context -->
+            <p>Kelas: {{ kelas }}</p> <!-- Kelas diambil dari context -->
         </div>
     </header>
+    
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
 
     <div>
-        {% for product in products %}
-        <div>
-            <!-- Nama Produk -->
-            <div><strong>{{ product.name }}</strong>
+        {% if products %}
+            <!-- Looping untuk menampilkan produk -->
+            {% for product in products %}
+            <div>
+                <!-- Nama Produk -->
+                <div><strong>{{ product.name }}</strong></div>
+                <!-- Harga Produk -->
+                <div>Rp {{ product.price }}</div>
+                <!-- Deskripsi Produk -->
+                <div>{{ product.description }}</div>
+                <!-- Kategori Produk -->
+                <div>Category: {{ product.category }}</div>
+                <!-- Rating Kondisi Produk -->
+                <div>Ratings: {{ product.ratings }}/10</div>
             </div>
-            <!-- Harga Produk -->
-            <div>Rp {{ product.price }}</div>
-            <!-- Deskripsi Produk -->
-            <div>{{ product.description }}</div>
-            <!-- Kategori Produk -->
-            <div>Category: {{ product.category }}</div>
-            <!-- Rating Kondisi Produk -->
-            <div>Ratings: {{ product.ratings }}/10</div>
-        </div>
-        <br>
-        {% endfor %}
+            <br>
+            {% endfor %}
+        {% else %}
+            <p>No products available.</p>
+        {% endif %}
     </div>
-</body>
 
-<a href="{% url 'main:create_product_form' %}">
-  <button>Add New Product Entry</button>
-</a>
-<br />
+    <footer>
+        <!-- Tombol untuk menambahkan produk baru -->
+        <a href="{% url 'main:create_product_form' %}">
+            <button>Add New Product Entry</button>
+        </a>
+
+        <!-- Tombol untuk logout -->
+        <a href="{% url 'main:logout' %}">
+            <button>Logout</button>
+        </a>
+
+        <br />
+    </footer>
+</body>
+</html>
 
 {% endblock content %}
