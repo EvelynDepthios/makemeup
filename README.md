@@ -651,6 +651,15 @@ def logout_user(request):
 <h5>Sesi terakhir login: {{ last_login }}</h5>
 ...
 ```
+### Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal. ###
+1. Jalankan proyek Django dengan perintah `python manage.py runserver`, pastikan virtual env sudah menyala
+2. Buka http://localhost:8000/ di browser dan tekan tombol register now
+3. Daftarkan diri untuk membuat akun
+4. Setelah membuat akun, halaman web akan kembali ke awal dan lakukan login sesuai dengan username dan password yang didaftarkan.
+5. Tekan tombol add product untuk menambahkan produk dan lakukan tiga kali untuk menambahkan tiga produk.
+6. Tekan tombol logout untuk kembali ke halaman awal dan daftarkan lagi satu akun sesuai dengan langkah nomor 4.
+7. Ulangi langkah nomor 5 dan dua akun pengguna dengan masing - masing tiga dummy data sudah terbuat.
+
 ### Menghubungkan Product dan User
 1. Buka `models.py` pada subdirektori `main` dan tambahkan import berikut.
 ```python
