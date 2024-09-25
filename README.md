@@ -444,6 +444,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 ```
 UserCreationForm adalah formulir bawaan dari Django yang dirancang untuk mempermudah pembuatan formulir pendaftaran pengguna dalam aplikasi web. 
+
 3. Masih di file yang sama, tambahkan fungsi `register` untuk membuat formulir registrasi dan menghasilkan akun pengguna.
 ```python
 def register(request):
@@ -525,6 +526,7 @@ def login_user(request):
    context = {'form': form}
    return render(request, 'login.html', context)
 ```
+
 3. Buat berkas HTML baru dengan nama `login.html` pada folder main/templates dan isi dengan kode berikut.
 ```{% extends 'base.html' %}
 
@@ -659,6 +661,8 @@ def logout_user(request):
 5. Tekan tombol add product untuk menambahkan produk dan lakukan tiga kali untuk menambahkan tiga produk.
 6. Tekan tombol logout untuk kembali ke halaman awal dan daftarkan lagi satu akun sesuai dengan langkah nomor 4.
 7. Ulangi langkah nomor 5 dan dua akun pengguna dengan masing - masing tiga dummy data sudah terbuat.
+<img src = https://github.com/EvelynDepthios/makemeup/blob/main/images/Dummy%20Product%201.png>
+<img src = https://github.com/EvelynDepthios/makemeup/blob/main/images/Dummy%20Product%202.png>
 
 ### Menghubungkan Product dan User
 1. Buka `models.py` pada subdirektori `main` dan tambahkan import berikut.
