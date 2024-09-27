@@ -1,62 +1,71 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>MAKE me UP</title>
+{% endblock meta %}
+
 {% block content %}
+<!-- Include Navbar -->
+{% include 'navbar.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAKEmeUP - Product List</title>
-</head>
-<body>
-    <!-- Header untuk nama aplikasi dan info pengguna -->
-    <header>
-        <h1>MAKEmeUP - Product List</h1>
-        <div>
-            <p>Nama: {{ nama }}</p> <!-- Nama diambil dari context -->
-            <p>Kelas: {{ kelas }}</p> <!-- Kelas diambil dari context -->
-        </div>
-    </header>
-    
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-
-    <div>
-        {% if products %}
-            <!-- Looping untuk menampilkan produk -->
-            {% for product in products %}
-            <div>
-                <!-- Nama Produk -->
-                <div><strong>{{ product.name }}</strong></div>
-                <!-- Harga Produk -->
-                <div>Rp {{ product.price }}</div>
-                <!-- Deskripsi Produk -->
-                <div>{{ product.description }}</div>
-                <!-- Kategori Produk -->
-                <div>Category: {{ product.category }}</div>
-                <!-- Rating Kondisi Produk -->
-                <div>Ratings: {{ product.ratings }}/10</div>
-            </div>
-            <br>
-            {% endfor %}
-        {% else %}
-            <p>No products available.</p>
-        {% endif %}
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
+  <!-- User Info Cards -->
+  <div class="p-2 mb-6 relative">
+    <div class="relative grid grid-cols-1 z-30 md:grid-cols-3 gap-8">
+      {% include "card_info.html" with title='NPM' value=npm %}
+      {% include "card_info.html" with title='Name' value=name %}
+      {% include "card_info.html" with title='Class' value=class %}
     </div>
+    <div class="w-full px-6 absolute top-[44px] left-0 z-20 hidden md:flex">
+      <div class="w-full min-h-4 bg-indigo-700"></div>
+    </div>
+    <div class="h-full w-full py-6 absolute top-0 left-0 z-20 md:hidden flex">
+      <div class="h-full min-w-4 bg-indigo-700 mx-auto"></div>
+    </div>
+  </div>
 
-    <footer>
-        <!-- Tombol untuk menambahkan produk baru -->
-        <a href="{% url 'main:create_product_form' %}">
-            <button>Add New Product Entry</button>
-        </a>
+  <!-- Last Login Display -->
+  <div class="px-3 mb-4">
+    <div class="flex rounded-md items-center bg-indigo-600 py-2 px-4 w-fit">
+      <h1 class="text-white text-center">Last Login: {{last_login}}</h1>
+    </div>
+  </div>
 
-        <!-- Tombol untuk logout -->
-        <a href="{% url 'main:logout' %}">
-            <button>Logout</button>
-        </a>
+  <!-- Heading and Add Product Button -->
+  <div class="flex justify-between items-center mb-6">
+    <!-- All Products heading -->
+    <h2 class="text-3xl font-bold text-gray-700">All Products</h2>
 
-        <br />
-    </footer>
-</body>
-</html>
+    <!-- Add New Product Button -->
+    <a href="{% url 'main:create_product_entry' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+      Add New Product Entry
+    </a>
+  </div>
+  
+  <!-- Products Display -->
+  {% if not products %}
+  <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+    <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+    <p class="text-center text-gray-600 mt-4">Belum ada data product pada MAKE me UP.</p>
+  </div>
+  {% else %}
+  <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
+    {% for product_entry in products %}
+      {% include 'card_product.html' with product_entry=product_entry %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- JavaScript to Toggle the Mobile Menu -->
+<script>
+  const btn = document.querySelector("button.mobile-menu-button");
+  const menu = document.querySelector(".mobile-menu");
+
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+  });
+</script>
 
 {% endblock content %}

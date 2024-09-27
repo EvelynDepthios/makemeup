@@ -1,73 +1,41 @@
-from datetime import datetime
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+import datetime
 from main.forms import CreateProductForm
 from main.models import Product
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/login')
 def show_main(request):
-    # Data produk didefinisikan secara manual dalam bentuk list of dictionaries
-    main_products = [
-        {
-            'name': 'Lip Butter Balm for Hydration & Shine',
-            'price': 24000,
-            'description': 'Moisturizing lip balm for hydration and shine.',
-            'category': 'Lip Care',
-            'ratings': 9,
-        },
-        {
-            'name': 'Soft Pinch Liquid Blush',
-            'price': 14000,
-            'description': 'Lightweight liquid blush for a soft, radiant finish.',
-            'category': 'Blush',
-            'ratings': 8,
-        },
-        {
-            'name': 'Major Headlines Double-Take Crème & Powder',
-            'price': 38000,
-            'description': 'A dual-ended compact with crème and powder blush.',
-            'category': 'Blush',
-            'ratings': 10,
-        },
-    ]
+    product_list = Product.objects.filter(user=request.user)
 
-    # Fetching products from the database
-    product_entries = Product.objects.filter(user=request.user)
-
-    # Merging manual data with database data
-    new_products = [{'name': prod.name, 'price': prod.price, 'description': prod.description, 'category': prod.category, 'ratings': prod.ratings} for prod in product_entries]
-
-    all_products = main_products + new_products
-
-    # Creating context to pass to the template
     context = {
-        'nama': request.user.username,
-        'kelas': 'PBP F',
-        'products': all_products,
+        'name': request.user.username,
+        'class': 'PBP F',
+        'npm': '2306207543',
+        'products': product_list,
         'last_login': request.COOKIES['last_login'],
     }
 
-    # Rendering the main template
-    return render(request, 'main.html', context)
+    return render(request, "main.html", context)
 
-def create_product_form(request):
+def create_product_entry(request):
     form = CreateProductForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        product = form.save(commit=False)
-        product.user = request.user  # Assign the product to the logged-in user
-        product.save()
+        product_entry = form.save(commit=False)
+        product_entry.user = request.user
+        product_entry.save()
         return redirect('main:show_main')
 
     context = {'form': form}
-    return render(request, "create_product_form.html", context)
+    return render(request, "create_product_entry.html", context)
 
 def register(request):
     form = UserCreationForm()
@@ -78,7 +46,7 @@ def register(request):
             form.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
-    context = {'form': form}
+    context = {'form':form}
     return render(request, 'register.html', context)
 
 def login_user(request):
@@ -89,7 +57,7 @@ def login_user(request):
         user = form.get_user()
         login(request, user)
         response = HttpResponseRedirect(reverse("main:show_main"))
-        response.set_cookie('last_login', str(datetime.now()))
+        response.set_cookie('last_login', str(datetime.datetime.now()))
         return response
 
    else:
@@ -102,6 +70,29 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_product(request, id):
+    # Get product entry berdasarkan id
+    product = Product.objects.get(pk = id)
+
+    # Set product entry sebagai instance dari form
+    form = CreateProductForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    # Get product berdasarkan id
+    product = Product.objects.get(pk = id)
+    # Hapus product
+    product.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
 
 def show_xml(request):
     data = Product.objects.all()
