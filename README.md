@@ -10,6 +10,7 @@ Link : http://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id
 
 [Tugas 4](#tugas-4)
 
+[Tugas 5](#tugas-5)
 
 # Tugas 2 #
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial) ##
@@ -710,3 +711,112 @@ PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 ...
 ```
+
+# Tugas 5 #
+## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Urutan prioritas CSS selector diambil berdasarkan spesifisitas dengan urutan sebagai berikut:
+
+1. **Inline Style** (dalam elemen HTML) memiliki prioritas tertinggi.
+2. **ID Selector** (`#id`).
+3. **Class, Attribute, dan Pseudo-class Selector** (`.class`, `[attr]`, `:hover`).
+4. **Tag Selector** (seperti `p`, `h1`, `div`).
+5. **Universal Selector** (`*`), yang memiliki prioritas paling rendah.
+6. **Important (`!important`)** mengalahkan semua aturan di atas.
+
+Aturan dengan spesifisitas lebih tinggi akan diambil jika beberapa selector diterapkan pada elemen yang sama.
+Source : https://www.w3.org/TR/CSS21/cascade.html#specificity
+
+## Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+**Mengapa responsive design penting:**
+
+Responsive design sangat penting karena memungkinkan situs web untuk menyesuaikan tampilannya sesuai dengan ukuran layar perangkat yang digunakan (desktop, tablet, atau ponsel). Dengan meningkatnya penggunaan perangkat mobile, aplikasi web harus memberikan pengalaman pengguna yang optimal di berbagai ukuran layar. Tanpa responsive design, pengguna di perangkat mobile mungkin mengalami kesulitan dalam navigasi atau membaca konten, yang dapat menyebabkan penurunan tingkat kunjungan dan interaksi.
+
+**Contoh aplikasi:**
+- **Sudah menerapkan responsive design:**  
+  - **YouTube:** Tampilan video dan navigasi secara otomatis menyesuaikan untuk berbagai perangkat, memastikan pengalaman yang konsisten di desktop dan ponsel.
+  - **Twitter:** Baik di desktop maupun mobile, Twitter menyesuaikan layout-nya dengan baik, seperti tampilan feed dan elemen interaktif lainnya.
+- **Belum menerapkan responsive design:**  
+  - **Situs web lama yang belum diperbarui untuk mobile:** Beberapa situs bisnis kecil atau situs web yang belum menggunakan teknik modern mungkin masih mengalami layout yang terpotong atau tidak responsif ketika diakses dari perangkat mobile.
+
+Source : https://developers.google.com/search/blog/2012/04/responsive-design-harnessing-power-of
+
+## Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+**Perbedaan antara Margin, Border, dan Padding:**
+
+1. **Margin:**  
+   - Ruang kosong di luar elemen, yang menciptakan jarak antara elemen tersebut dengan elemen lain di sekitarnya.  
+   - **Contoh Implementasi:**
+     ```css
+     div {
+       margin: 20px; /* Jarak 20px dari elemen lain */
+     }
+     ```
+
+2. **Border:**  
+   - Garis yang mengelilingi elemen, terletak di antara margin dan padding. Border dapat memiliki warna, ketebalan, dan gaya.
+   - **Contoh Implementasi:**
+     ```css
+     div {
+       border: 2px solid black; /* Border hitam dengan ketebalan 2px */
+     }
+     ```
+
+3. **Padding:**  
+   - Ruang kosong di dalam elemen, yang menciptakan jarak antara konten elemen dengan border elemen tersebut.
+   - **Contoh Implementasi:**
+     ```css
+     div {
+       padding: 10px; /* Jarak 10px dari konten ke border */
+     }
+     ```
+
+**Visualisasi:**
+- **Margin** berada di luar elemen,
+- **Border** adalah garis di sekeliling elemen,
+- **Padding** berada di dalam elemen, antara konten dan border.
+
+Source : https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model
+
+## Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+**Flexbox (Flexible Box Layout):**
+
+Flexbox adalah layout model CSS yang dirancang untuk menyusun elemen dalam satu dimensi, baik secara horizontal atau vertikal. Ini memungkinkan elemen-elemen dalam container fleksibel untuk menyesuaikan diri dengan mudah berdasarkan ukuran container dan orientasinya.
+
+**Kegunaan Flexbox:**
+- Mengatur elemen secara responsif tanpa perlu menggunakan float atau positioning.
+- Memungkinkan elemen untuk menyesuaikan ukuran, jarak, dan urutan dengan mudah di dalam container.
+- Sangat cocok untuk membuat layout baris atau kolom.
+
+**Contoh Implementasi:**
+```css
+.container {
+  display: flex;
+  justify-content: space-between; /* Mengatur jarak antar elemen */
+}
+```
+
+**Grid Layout:**
+
+Grid layout adalah sistem layout dua dimensi yang memungkinkan kita untuk membuat struktur layout yang lebih kompleks dengan baris dan kolom. Dengan grid, kita bisa lebih mudah mengatur elemen secara presisi dalam grid yang terdefinisi dengan baik.
+
+**Kegunaan Grid Layout:**
+- Ideal untuk membuat layout yang lebih kompleks dengan beberapa baris dan kolom.
+- Memudahkan pengaturan elemen dalam baris dan kolom secara fleksibel.
+- Dapat digunakan untuk layout responsif dan adaptif dengan grid otomatis yang menyesuaikan ukuran layar.
+
+**Contoh Implementasi:**
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Membuat dua kolom */
+  grid-template-rows: auto;
+}
+```
+
+**Perbedaan Utama:**
+- **Flexbox** lebih cocok untuk layout satu dimensi (baik baris atau kolom).
+- **Grid Layout** lebih baik digunakan untuk layout dua dimensi (baris dan kolom).
+
+Source : https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout, https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)! 
