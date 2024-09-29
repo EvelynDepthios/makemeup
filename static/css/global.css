@@ -1,0 +1,76 @@
+/* Form Styles */
+.form-style form input, 
+.form-style form textarea, 
+.form-style form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ffb6c1; /* Pinkish Border */
+    border-radius: 0.5rem; /* Slightly more rounded */
+    background-color: #ffe4e1; /* Light pink background for inputs */
+    color: #333; /* Text color */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.form-style form input:focus, 
+.form-style form textarea:focus, 
+.form-style form select:focus {
+    outline: none;
+    border-color: #ff69b4; /* Hot pink border on focus */
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.4); /* Pink glow */
+    background-color: #fff; /* Change background to white on focus */
+}
+
+/* Animation for shine effect */
+@keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Shine effect on cards */
+.animate-shine {
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), rgba(255, 105, 180, 0.2) 50%, rgba(255, 255, 255, 0.4));
+    background-size: 200% 100%;
+    animation: shine 3s infinite linear;
+}
+
+/* General Button Style */
+button {
+    background-color: #ff69b4; /* Hot pink background */
+    color: white; /* White text */
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff85c1; /* Lighter pink on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 8px 15px rgba(255, 105, 180, 0.3); /* Shadow on hover */
+}
+
+/* Custom Styles for text input placeholders */
+::placeholder {
+    color: #ff85c1; /* Light pink for placeholders */
+    opacity: 0.7;
+}
+
+/* Form label styles */
+.form-style form label {
+    font-weight: 600;
+    color: #ff69b4; /* Hot pink for form labels */
+    margin-bottom: 0.5rem;
+}
+
+/* Ratings Bar */
+.ratings-bar {
+    background-color: #ffe4e1; /* Light pink background for the bar */
+    border-radius: 0.5rem;
+}
+
+.ratings-fill {
+    background-color: #ff69b4; /* Hot pink for the filled part */
+    height: 100%;
+    border-radius: 0.5rem;
+}

@@ -94,6 +94,15 @@ def delete_product(request, id):
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
 
+def home(request):
+    return render(request, 'main.html')
+
+def products(request):
+    return render(request, 'main.html')
+
+# def cart(request):
+#     return render(request, 'cart.html')
+
 def show_xml(request):
     data = Product.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")

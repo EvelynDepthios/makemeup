@@ -9,8 +9,7 @@
 <!-- Include Navbar -->
 {% include 'navbar.html' %}
 
-<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
-  <!-- User Info Cards -->
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gradient-to-b from-pink-50 via-pink-100 to-pink-200 flex flex-col">
   <div class="p-2 mb-6 relative">
     <div class="relative grid grid-cols-1 z-30 md:grid-cols-3 gap-8">
       {% include "card_info.html" with title='NPM' value=npm %}
@@ -18,27 +17,30 @@
       {% include "card_info.html" with title='Class' value=class %}
     </div>
     <div class="w-full px-6 absolute top-[44px] left-0 z-20 hidden md:flex">
-      <div class="w-full min-h-4 bg-indigo-700"></div>
+      <div class="w-full min-h-4 bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 rounded-lg"></div>
     </div>
     <div class="h-full w-full py-6 absolute top-0 left-0 z-20 md:hidden flex">
-      <div class="h-full min-w-4 bg-indigo-700 mx-auto"></div>
+      <div class="h-full min-w-4 bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 mx-auto rounded-lg"></div>
     </div>
   </div>
 
   <!-- Last Login Display -->
   <div class="px-3 mb-4">
-    <div class="flex rounded-md items-center bg-indigo-600 py-2 px-4 w-fit">
+    <div class="flex rounded-md items-center bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 py-2 px-4 w-fit shadow-lg">
       <h1 class="text-white text-center">Last Login: {{last_login}}</h1>
     </div>
   </div>
 
+  <!-- Pembatas garis antara info login dan produk -->
+  <div class="my-6 border-t border-pink-300"></div>
+  
   <!-- Heading and Add Product Button -->
   <div class="flex justify-between items-center mb-6">
     <!-- All Products heading -->
     <h2 class="text-3xl font-bold text-gray-700">All Products</h2>
 
     <!-- Add New Product Button -->
-    <a href="{% url 'main:create_product_entry' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+    <a href="{% url 'main:create_product_entry' %}" class="bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
       Add New Product Entry
     </a>
   </div>
@@ -50,7 +52,7 @@
     <p class="text-center text-gray-600 mt-4">Belum ada data product pada MAKE me UP.</p>
   </div>
   {% else %}
-  <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
     {% for product_entry in products %}
       {% include 'card_product.html' with product_entry=product_entry %}
     {% endfor %}
