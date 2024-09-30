@@ -7,18 +7,18 @@
 {% block content %}
 {% include 'navbar.html' %}
 
-<div class="flex flex-col min-h-screen bg-gray-100">
-  <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
-    <h1 class="text-3xl font-bold text-center mb-8 text-black">Create Product Entry</h1>
+<div class="flex flex-col min-h-screen bg-pink-50">
+  <div class="container mx-auto px-4 py-8 mt-16 max-w-lg">
+    <h1 class="text-3xl font-extrabold text-center mb-8 text-pink-600">Create Product Entry</h1>
   
-    <div class="bg-white shadow-md rounded-lg p-6 form-style">
+    <div class="bg-white shadow-lg rounded-lg p-8 form-style">
       <form method="POST" class="space-y-6">
         {% csrf_token %}
         
         <!-- Loop through form fields -->
         {% for field in form %}
           <div class="flex flex-col">
-            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-pink-600">
               {{ field.label }}
             </label>
 
@@ -26,10 +26,10 @@
             {% if field.name == 'price' %}
               <!-- Input group for price with 'Rp' -->
               <div class="flex">
-                <span class="inline-flex items-center px-3 bg-gray-200 text-gray-900 border border-gray-300 rounded-l-md">
+                <span class="inline-flex items-center px-3 bg-pink-100 text-gray-900 border border-pink-300 rounded-l-md">
                   Rp
                 </span>
-                <input type="text" name="{{ form.price.name }}" id="{{ form.price.id_for_label }}" class="form-input w-full rounded-r-md border-gray-300" value="{{ form.price.value|default_if_none:'' }}">
+                <input type="text" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-input w-full rounded-r-md border-pink-300 focus:ring-pink-500 focus:border-pink-500" value="{{ field.value|default_if_none:'' }}">
               </div>
             {% else %}
               <div class="w-full">
@@ -47,7 +47,7 @@
         {% endfor %}
 
         <div class="flex justify-center mt-6">
-          <button type="submit" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out w-full">
+          <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out w-full shadow-md transform hover:scale-105">
             Create Product Entry
           </button>
         </div>
@@ -55,5 +55,11 @@
     </div>
   </div>
 </div>
-
+<footer class="bg-white py-4 w-full fixed bottom-0 left-0 z-50 shadow-lg">
+  <div class="container mx-auto text-center">
+    <p class="text-pink-600 font-medium">
+      [{{ user.username }}_2306207543_PBP F] @MAKEmeUP
+    </p>
+  </div>
+</footer>
 {% endblock %}

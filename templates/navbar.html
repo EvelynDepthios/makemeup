@@ -1,7 +1,10 @@
+{% load static %}
 <nav class="bg-pink-200 shadow-lg fixed top-0 left-0 z-40 w-screen">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
+        <!-- Add the image before the title -->
+        <img src="{% static 'image/logo.png' %}" alt="Logo" class="h-8 w-8 mr-2">
         <h1 class="text-2xl font-bold text-center text-black">MAKE me UP</h1>
       </div>
       <div class="hidden md:flex items-center space-x-4">
@@ -32,7 +35,10 @@
         <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Cart</a>
         
         {% if user.is_authenticated %}
-          <span class="text-gray-700">Welcome, {{ user.username }}</span>
+          <!-- Make the username clickable with hover underline effect -->
+          <a href="{% url 'main:user_info' %}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium hover:underline">
+            Welcome, {{ user.username }}
+          </a>
           <a href="{% url 'main:logout' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
             Logout
           </a>
@@ -61,8 +67,8 @@
   <div class="mobile-menu hidden md:hidden px-4 w-full md:max-w-full bg-pink-200">
     <div class="pt-2 pb-3 space-y-1 mx-auto">
       <!-- Links for Mobile View -->
-      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Products</a>
+      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium hover:underline">Home</a>
+      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium hover:underline">Products</a>
 
       <!-- Mobile Categories Dropdown -->
       <div class="relative">
@@ -75,8 +81,10 @@
         <!-- Mobile Dropdown Menu -->
         <div id="mobileDropdownMenu" class="hidden mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
           <div class="py-1">
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Makeup</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Skincare</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Lip Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Eye Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Face Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Body Care</a>
             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Fragrance</a>
           </div>
         </div>
@@ -85,7 +93,8 @@
       <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Cart</a>
       
       {% if user.is_authenticated %}
-        <span class="block text-gray-700 px-3 py-2">Welcome, {{ user.username }}</span>
+        <!-- Make the username clickable with hover underline effect on mobile -->
+        <a href="{% url 'main:user_info' %}" class="block text-gray-700 px-3 py-2 hover:underline">Welcome, {{ user.username }}</a>
         <a href="{% url 'main:logout' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
           Logout
         </a>

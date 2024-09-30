@@ -26,7 +26,6 @@
     100% { background-position: 200% 0; }
 }
 
-/* Shine effect on cards */
 .animate-shine {
     background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), rgba(255, 105, 180, 0.2) 50%, rgba(255, 255, 255, 0.4));
     background-size: 200% 100%;

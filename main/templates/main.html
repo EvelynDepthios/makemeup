@@ -10,24 +10,42 @@
 {% include 'navbar.html' %}
 
 <div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gradient-to-b from-pink-50 via-pink-100 to-pink-200 flex flex-col">
-  <div class="p-2 mb-6 relative">
-    <div class="relative grid grid-cols-1 z-30 md:grid-cols-3 gap-8">
-      {% include "card_info.html" with title='NPM' value=npm %}
-      {% include "card_info.html" with title='Name' value=name %}
-      {% include "card_info.html" with title='Class' value=class %}
+  
+  <!-- Carousel Section -->
+  <div class="relative flex items-center justify-center mb-6 w-full">
+    
+    <!-- Prev Button positioned tightly to the left of the carousel -->
+    <button id="prevBtn" class="absolute left-0 transform translate-x-1 bg-pink-500 text-white p-3 rounded-full shadow-lg focus:outline-none">&larr;</button>
+
+    <!-- Carousel Section for Photos -->
+    <div class="relative w-2/3 max-w-lg mx-auto overflow-hidden">
+      <div id="carousel-cards" class="flex transition-transform duration-500 ease-in-out">
+        <!-- Card with Image 1 -->
+        <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
+          <img src="{% static 'image/carousel1.jpeg' %}" alt="Photo 1" class="w-full h-auto object-cover rounded-lg"/>
+        </div>
+
+        <!-- Card with Image 2 -->
+        <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
+          <img src="{% static 'image/carousel2.jpg' %}" alt="Photo 2" class="w-full h-auto object-cover rounded-lg"/>
+        </div>
+
+        <!-- Card with Image 3 -->
+        <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
+          <img src="{% static 'image/carousel3.jpg' %}" alt="Photo 3" class="w-full h-auto object-cover rounded-lg"/>
+        </div>
+      </div>
     </div>
-    <div class="w-full px-6 absolute top-[44px] left-0 z-20 hidden md:flex">
-      <div class="w-full min-h-4 bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 rounded-lg"></div>
-    </div>
-    <div class="h-full w-full py-6 absolute top-0 left-0 z-20 md:hidden flex">
-      <div class="h-full min-w-4 bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 mx-auto rounded-lg"></div>
-    </div>
+
+    <!-- Next Button positioned tightly to the right of the carousel -->
+    <button id="nextBtn" class="absolute right-0 transform -translate-x-1 bg-pink-500 text-white p-3 rounded-full shadow-lg focus:outline-none">&rarr;</button>
+
   </div>
 
-  <!-- Last Login Display -->
-  <div class="px-3 mb-4">
-    <div class="flex rounded-md items-center bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 py-2 px-4 w-fit shadow-lg">
-      <h1 class="text-white text-center">Last Login: {{last_login}}</h1>
+  <!-- Last Login Section moved below the carousel -->
+  <div class="w-full flex justify-left mb-6">
+    <div class="flex rounded-md items-center bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 py-2 px-4 w-fit shadow-lg animate-shine">
+      <h1 class="text-white text-center">Last Login: {{ last_login }}</h1>
     </div>
   </div>
 
@@ -52,7 +70,7 @@
     <p class="text-center text-gray-600 mt-4">Belum ada data product pada MAKE me UP.</p>
   </div>
   {% else %}
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-12">
     {% for product_entry in products %}
       {% include 'card_product.html' with product_entry=product_entry %}
     {% endfor %}
@@ -60,13 +78,41 @@
   {% endif %}
 </div>
 
-<!-- JavaScript to Toggle the Mobile Menu -->
-<script>
-  const btn = document.querySelector("button.mobile-menu-button");
-  const menu = document.querySelector(".mobile-menu");
+<!-- Footer Section -->
+<footer class="bg-white py-4 w-full fixed bottom-0 left-0 z-50 shadow-lg">
+  <div class="container mx-auto text-center">
+    <p class="text-pink-600 font-medium">
+      [{{ name }}_{{ npm }}_{{ class }}] @MAKEmeUP
+    </p>
+  </div>
+</footer>
 
-  btn.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
+<!-- JavaScript for Carousel Controls -->
+<script>
+  const carousel = document.getElementById('carousel-cards');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  let index = 0;
+
+  function autoSwipe() {
+    index = (index + 1) % 3; // Adjust according to number of images
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  let autoSwipeInterval = setInterval(autoSwipe, 3000);
+
+  nextBtn.addEventListener('click', () => {
+    clearInterval(autoSwipeInterval);
+    index = (index + 1) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    autoSwipeInterval = setInterval(autoSwipe, 3000);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    clearInterval(autoSwipeInterval);
+    index = (index - 1 + 3) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    autoSwipeInterval = setInterval(autoSwipe, 3000);
   });
 </script>
 

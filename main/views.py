@@ -103,6 +103,22 @@ def products(request):
 # def cart(request):
 #     return render(request, 'cart.html')
 
+@login_required
+def user_info(request):
+    return render(request, 'user_info.html')
+
+@login_required
+def edit_user_info(request):
+    if request.method == 'POST':
+        user = request.user
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.save()
+        return redirect('user_info')
+
+    return render(request, 'edit_user_info.html')
+
+
 def show_xml(request):
     data = Product.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")

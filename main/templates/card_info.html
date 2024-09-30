@@ -1,12 +1,139 @@
-<div class="bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl overflow-hidden border-2 border-pink-300 shadow-lg flex items-center space-x-4 p-4">
-  <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-    <!-- Example icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-6 w-6">
-      <path d="M12 0l3.084 9h9.548l-7.732 5.613 3.084 9-7.732-5.613-7.732 5.613 3.084-9-7.732-5.613h9.548z"/>
-    </svg>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>MAKE me UP</title>
+{% endblock meta %}
+
+{% block content %}
+<!-- Include Navbar -->
+{% include 'navbar.html' %}
+
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gradient-to-b from-pink-50 via-pink-100 to-pink-200 flex flex-col">
+  
+  <!-- Carousel Section and Last Login Row -->
+  <div class="flex justify-between items-center mb-6 w-full">
+    
+    <!-- Prev Button Outside of Card -->
+    <div class="flex items-center justify-center">
+      <button id="prevBtn" class="bg-pink-500 text-white p-2 rounded-full shadow-lg focus:outline-none">&larr;</button> <!-- Padding dan jarak tombol diperkecil -->
+    </div>
+
+    <!-- Carousel Section -->
+    <div class="relative w-2/3 max-w-lg overflow-hidden">
+      <div id="carousel-cards" class="flex transition-transform duration-500 ease-in-out">
+        <!-- Card NPM -->
+        <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center space-x-6 hover:shadow-xl transition-shadow duration-300 ease-in-out w-full min-w-full flex-shrink-0">
+          <!-- Icon with Background -->
+          <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-6 w-6">
+              <path d="M12 0l3.084 9h9.548l-7.732 5.613 3.084 9-7.732-5.613-7.732 5.613 3.084-9-7.732-5.613h9.548z"/>
+            </svg>
+          </div>
+          <!-- Text Section -->
+          <div class="flex-1">
+            <h5 class="text-xl font-bold text-gray-800 mb-1">NPM</h5>
+            <p class="text-pink-500 font-medium">{{ npm }}</p>
+          </div>
+        </div>
+
+        <!-- Card Name -->
+        <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center space-x-6 hover:shadow-xl transition-shadow duration-300 ease-in-out w-full min-w-full flex-shrink-0">
+          <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-6 w-6">
+              <path d="M12 0l3.084 9h9.548l-7.732 5.613 3.084 9-7.732-5.613-7.732 5.613 3.084-9-7.732-5.613h9.548z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h5 class="text-xl font-bold text-gray-800 mb-1">Name</h5>
+            <p class="text-pink-500 font-medium">{{ name }}</p>
+          </div>
+        </div>
+
+        <!-- Card Class -->
+        <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center space-x-6 hover:shadow-xl transition-shadow duration-300 ease-in-out w-full min-w-full flex-shrink-0">
+          <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-6 w-6">
+              <path d="M12 0l3.084 9h9.548l-7.732 5.613 3.084 9-7.732-5.613-7.732 5.613 3.084-9-7.732-5.613h9.548z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h5 class="text-xl font-bold text-gray-800 mb-1">Class</h5>
+            <p class="text-pink-500 font-medium">{{ class }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Button Outside of Card -->
+    <div class="flex items-center justify-center">
+      <button id="nextBtn" class="bg-pink-500 text-white p-2 rounded-full shadow-lg focus:outline-none">&rarr;</button> <!-- Padding dan jarak tombol diperkecil -->
+    </div>
+
+    <!-- Last Login Section -->
+    <div class="w-1/3 flex justify-end">
+      <div class="flex rounded-md items-center bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 py-2 px-4 w-fit shadow-lg animate-shine">
+        <h1 class="text-white text-center">Last Login: {{ last_login }}</h1>
+      </div>
+    </div>
   </div>
-  <div>
-    <h5 class="text-lg font-semibold text-pink-700">{{ title }}</h5>
-    <p class="text-pink-600">{{ value }}</p>
+
+  <!-- Pembatas garis antara info login dan produk -->
+  <div class="my-6 border-t border-pink-300"></div>
+  
+  <!-- Heading and Add Product Button -->
+  <div class="flex justify-between items-center mb-6">
+    <!-- All Products heading -->
+    <h2 class="text-3xl font-bold text-gray-700">All Products</h2>
+
+    <!-- Add New Product Button -->
+    <a href="{% url 'main:create_product_entry' %}" class="bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+      Add New Product Entry
+    </a>
   </div>
+  
+  <!-- Products Display -->
+  {% if not products %}
+  <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+    <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+    <p class="text-center text-gray-600 mt-4">Belum ada data product pada MAKE me UP.</p>
+  </div>
+  {% else %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+    {% for product_entry in products %}
+      {% include 'card_product.html' with product_entry=product_entry %}
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
+
+<!-- JavaScript for Carousel Controls -->
+<script>
+  const carousel = document.getElementById('carousel-cards');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  let index = 0;
+
+  function autoSwipe() {
+    index = (index + 1) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  let autoSwipeInterval = setInterval(autoSwipe, 3000);
+
+  nextBtn.addEventListener('click', () => {
+    clearInterval(autoSwipeInterval);
+    index = (index + 1) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    autoSwipeInterval = setInterval(autoSwipe, 3000);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    clearInterval(autoSwipeInterval);
+    index = (index - 1 + 3) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    autoSwipeInterval = setInterval(autoSwipe, 3000);
+  });
+</script>
+
+{% endblock content %}

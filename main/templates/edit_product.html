@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block meta %}
-<title>Edit Mood</title>
+<title>Edit Product</title>
 {% endblock meta %}
 
 {% block content %}
 {% include 'navbar.html' %}
-<div class="flex flex-col min-h-screen bg-gray-100">
-  <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
-    <h1 class="text-3xl font-bold text-center mb-8 text-black">Edit Product Entry</h1>
+<div class="flex flex-col min-h-screen bg-pink-50">
+  <div class="container mx-auto px-4 py-8 mt-16 max-w-lg">
+    <h1 class="text-3xl font-extrabold text-center mb-8 text-pink-600">Edit Product Entry</h1>
   
-    <div class="bg-white rounded-lg p-6 form-style">
+    <div class="bg-white rounded-lg shadow-lg p-8 form-style">
       <form method="POST" class="space-y-6">
           {% csrf_token %}
           {% for field in form %}
               <div class="flex flex-col">
-                  <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+                  <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-pink-600">
                       {{ field.label }}
                   </label>
                   <div class="w-full">
@@ -30,12 +30,19 @@
               </div>
           {% endfor %}
           <div class="flex justify-center mt-6">
-              <button type="submit" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out w-full">
-                  Edit Product Entry
+              <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out w-full shadow-md transform hover:scale-105">
+                  Update Product Entry
               </button>
           </div>
       </form>
-  </div>
+    </div>
   </div>
 </div>
+<footer class="bg-white py-4 w-full fixed bottom-0 left-0 z-50 shadow-lg">
+    <div class="container mx-auto text-center">
+      <p class="text-pink-600 font-medium">
+        [{{ user.username }}_2306207543_PBP F] @MAKEmeUP
+      </p>
+    </div>
+</footer>
 {% endblock %}

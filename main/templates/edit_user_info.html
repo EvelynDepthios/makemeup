@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Edit {{ user.username }}'s Profile</title>
+{% endblock meta %}
+
+{% block content %}
+<!-- Include Navbar -->
+{% include 'navbar.html' %}
+
+<!-- Edit User Info Container -->
+<div class="min-h-screen bg-gradient-to-b from-pink-50 to-pink-100 flex justify-center items-center py-10">
+  <div class="bg-white shadow-lg rounded-lg p-8 max-w-2xl w-full mx-auto">
+    <h1 class="text-3xl font-bold text-pink-600 mb-6">Edit Profile</h1>
+
+    <!-- Form to Edit User Info -->
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+
+      <div>
+        <label class="block text-pink-700 text-sm font-bold mb-2" for="username">Username:</label>
+        <input id="username" name="username" type="text" value="{{ user.username }}" class="w-full border border-pink-300 rounded-md p-2 focus:border-pink-500 focus:ring-pink-500">
+      </div>
+
+      <div>
+        <label class="block text-pink-700 text-sm font-bold mb-2" for="email">Email:</label>
+        <input id="email" name="email" type="email" value="{{ user.email }}" class="w-full border border-pink-300 rounded-md p-2 focus:border-pink-500 focus:ring-pink-500">
+      </div>
+
+      <div class="flex justify-between">
+        <a href="{% url 'main:user_info' %}" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded-lg transition-all">Cancel</a>
+        <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<footer class="bg-white py-4 w-full fixed bottom-0 left-0 z-50 shadow-lg">
+    <div class="container mx-auto text-center">
+      <p class="text-pink-600 font-medium">
+        [{{ user.username }}_2306207543_PBP F] @MAKEmeUP
+      </p>
+    </div>
+</footer>
+{% endblock content %}
