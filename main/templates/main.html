@@ -13,34 +13,34 @@
   
   <!-- Carousel Section -->
   <div class="relative flex items-center justify-center mb-6 w-full">
-    
+  
     <!-- Prev Button positioned tightly to the left of the carousel -->
-    <button id="prevBtn" class="absolute left-0 transform translate-x-1 bg-pink-500 text-white p-3 rounded-full shadow-lg focus:outline-none">&larr;</button>
-
+    <button id="prevBtn" class="absolute left-4 transform bg-pink-500 text-white p-5 rounded-full shadow-lg focus:outline-none z-10">&larr;</button> <!-- Updated left positioning -->
+  
     <!-- Carousel Section for Photos -->
-    <div class="relative w-2/3 max-w-lg mx-auto overflow-hidden">
+    <div class="relative w-full mx-auto overflow-hidden"> <!-- Changed to w-full -->
       <div id="carousel-cards" class="flex transition-transform duration-500 ease-in-out">
         <!-- Card with Image 1 -->
         <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
-          <img src="{% static 'image/carousel1.jpeg' %}" alt="Photo 1" class="w-full h-auto object-cover rounded-lg"/>
+          <img src="{% static 'image/promo1.png' %}" alt="Photo 1" class="w-full h-auto object-cover rounded-lg"/>
         </div>
-
+  
         <!-- Card with Image 2 -->
         <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
-          <img src="{% static 'image/carousel2.jpg' %}" alt="Photo 2" class="w-full h-auto object-cover rounded-lg"/>
+          <img src="{% static 'image/promo2.jpg' %}" alt="Photo 2" class="w-full h-auto object-cover rounded-lg"/>
         </div>
-
+  
         <!-- Card with Image 3 -->
         <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
-          <img src="{% static 'image/carousel3.jpg' %}" alt="Photo 3" class="w-full h-auto object-cover rounded-lg"/>
+          <img src="{% static 'image/promo3.jpg' %}" alt="Photo 3" class="w-full h-auto object-cover rounded-lg"/>
         </div>
       </div>
     </div>
-
+  
     <!-- Next Button positioned tightly to the right of the carousel -->
-    <button id="nextBtn" class="absolute right-0 transform -translate-x-1 bg-pink-500 text-white p-3 rounded-full shadow-lg focus:outline-none">&rarr;</button>
-
-  </div>
+    <button id="nextBtn" class="absolute right-4 transform bg-pink-500 text-white p-5 rounded-full shadow-lg focus:outline-none z-10">&rarr;</button> <!-- Updated right positioning -->
+  
+  </div>  
 
   <!-- Last Login Section moved below the carousel -->
   <div class="w-full flex justify-left mb-6">

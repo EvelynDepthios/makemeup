@@ -9,12 +9,12 @@
       </div>
       <div class="hidden md:flex items-center space-x-4">
         <!-- Links for Desktop View -->
-        <a href="{% url 'main:home' %}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-        <a href="{% url 'main:products' %}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Products</a>
+        <a href="{% url 'main:home' %}" class="text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+        <a href="{% url 'main:products' %}" class="text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
 
         <!-- Categories Dropdown -->
         <div class="relative">
-          <button id="categoryDropdown" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+          <button id="categoryDropdown" class="text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
             Categories
             <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 9l-7 7-7-7"></path>
@@ -23,30 +23,24 @@
           <!-- Dropdown Menu -->
           <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
             <div class="py-1">
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Lip Product</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Eye Product</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Face Product</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Body Care</a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Fragrance</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Lip Product</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Eye Product</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Face Product</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Body Care</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Fragrance</a>
             </div>
           </div>
-        </div>
-
-        <a href="#" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Cart</a>
-        
+        </div>        
         {% if user.is_authenticated %}
-          <!-- Make the username clickable with hover underline effect -->
-          <a href="{% url 'main:user_info' %}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium hover:underline">
-            Welcome, {{ user.username }}
-          </a>
+          <a href="{% url 'main:user_info' %}" class="block text-gray-700 px-3 py-2 hover:underline">Welcome, {{ user.username }}</a>
           <a href="{% url 'main:logout' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
             Logout
           </a>
         {% else %}
-          <a href="{% url 'main:login' %}" class="text-center bg-pink-300 hover:bg-pink-400 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
+          <a href="{% url 'main:login' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
             Login
           </a>
-          <a href="{% url 'main:register' %}" class="text-center bg-pink-300 hover:bg-pink-400 text-white font-bold py-2 px-4 rounded transition duration-300">
+          <a href="{% url 'main:register' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
             Register
           </a>
         {% endif %}
@@ -67,12 +61,12 @@
   <div class="mobile-menu hidden md:hidden px-4 w-full md:max-w-full bg-pink-200">
     <div class="pt-2 pb-3 space-y-1 mx-auto">
       <!-- Links for Mobile View -->
-      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium hover:underline">Home</a>
-      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium hover:underline">Products</a>
+      <a href="{% url 'main:home' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+      <a href="{% url 'main:products' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
 
       <!-- Mobile Categories Dropdown -->
       <div class="relative">
-        <button id="mobileCategoryDropdown" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+        <button id="mobileCategoryDropdown" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
           Categories
           <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 9l-7 7-7-7"></path>
@@ -81,28 +75,27 @@
         <!-- Mobile Dropdown Menu -->
         <div id="mobileDropdownMenu" class="hidden mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
           <div class="py-1">
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Lip Product</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Eye Product</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Face Product</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Body Care</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100">Fragrance</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Lip Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Eye Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Face Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Body Care</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Fragrance</a>
           </div>
         </div>
       </div>
 
-      <a href="#" class="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Cart</a>
+      <a href="#" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cart</a>
       
       {% if user.is_authenticated %}
-        <!-- Make the username clickable with hover underline effect on mobile -->
-        <a href="{% url 'main:user_info' %}" class="block text-gray-700 px-3 py-2 hover:underline">Welcome, {{ user.username }}</a>
+        <a href="{% url 'main:user_info' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Welcome, {{ user.username }}</a>
         <a href="{% url 'main:logout' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
           Logout
         </a>
       {% else %}
-        <a href="{% url 'main:login' %}" class="block text-center bg-pink-300 hover:bg-pink-400 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+        <a href="{% url 'main:login' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
           Login
         </a>
-        <a href="{% url 'main:register' %}" class="block text-center bg-pink-300 hover:bg-pink-400 text-white font-bold py-2 px-4 rounded transition duration-300">
+        <a href="{% url 'main:register' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
           Register
         </a>
       {% endif %}
