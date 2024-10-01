@@ -21,9 +21,3 @@ class Product(models.Model):
     @property
     def is_product_good(self):
         return self.ratings > 5
-    
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name

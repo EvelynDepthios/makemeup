@@ -1,6 +1,6 @@
 from django.urls import path
 from main import views
-from main.views import show_main, create_product_entry, show_xml, show_json, show_xml_by_id, show_json_by_id, register, login_user, logout_user, edit_product, delete_product, user_info, edit_user_info
+from main.views import show_main, create_product_entry, show_xml, show_json, show_xml_by_id, show_json_by_id, register, login_user, logout_user, edit_product, delete_product, user_info
 
 app_name = 'main'
 
@@ -23,6 +23,5 @@ urlpatterns = [
     # Halaman tambahan
     path('home/', show_main, name='home'),
     path('products/', show_main, name='products'),
-    # path('cart/', views.cart, name='cart'),
     path('user-info/', user_info, name='user_info'),
 ]

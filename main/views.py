@@ -100,9 +100,6 @@ def home(request):
 def products(request):
     return render(request, 'main.html')
 
-# def cart(request):
-#     return render(request, 'cart.html')
-
 @login_required
 def user_info(request):
     return render(request, 'user_info.html')
