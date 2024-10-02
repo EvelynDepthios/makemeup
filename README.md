@@ -820,3 +820,482 @@ Grid layout adalah sistem layout dua dimensi yang memungkinkan kita untuk membua
 Source : https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout, https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)! 
+### 1. Implementasi Fungsi untuk Menghapus dan Mengedit Produk ###
+a. Mengedit Produk
+1. Di dalam `views.py`, buatlah fungsi `edit_product` yang menerima ID produk dan mengupdate informasi produk. Gunakan `CreateProductForm` sebagai form untuk mengedit produk.
+```python
+def edit_product(request, id):
+    product = Product.objects.get(pk = id)
+    form = CreateProductForm(request.POST or None, instance=product)
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+```
+2. Buatlah template `edit_product.html` yang menggunakan form tersebut. Tampilkan field yang ada di `CreateProductForm`.
+3. Di template `card_product.html`, buat tautan untuk mengedit produk yang mengarah ke view yang telah dibuat.
+
+b. Menghapus Produk
+1. Di dalam `views.py`, buatlah fungsi `delete_product` yang akan menghapus produk berdasarkan ID.sebagai form untuk mengedit produk.
+```python
+def delete_product(request, id):
+    product = Product.objects.get(pk=id)
+    product.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
+2. Di template `card_product.html`, buat tautan untuk menghapus produk yang mengarah ke view yang telah dibuat.
+
+Setelah kedua fungsi telah dibuat, di `urls.py`, buatlah rute URL untuk menghapus dan mengedit produk. Rute ini akan memanggil fungsi di `views.py` yang berfungsi untuk menangani operasi edit dan delete.
+```python
+from django.urls import path
+from main.views import ..., edit_product, delete_product
+urlpatterns = [
+  ...
+    path('edit-product/<uuid:id>', edit_product, name='edit_product'),
+    path('delete/<uuid:id>', delete_product, name='delete_product'),
+]
+```
+
+### 2. Kustomisasi Desain pada Template HTML Menggunakan CSS Framework Tailwind ###
+Untuk menggunakan Tailwind dalam melakukan styling terhadap aplikasi Django, lakukan langkah-langkah berikut :
+1. Buka project Django (make_me_up), buka file `base.html` yang telah dibuat sebelumnya pada templates folder yang berada di root project dan tambahkan potongan kode berikut.
+```html
+<head>
+{% block meta %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock meta %}
+<script src="https://cdn.tailwindcss.com">
+</script>
+</head>
+```
+Kode ini berfungsi untuk menyesuaikan ukuran dan perilaku perangkat mobile, serta menyambungkan template Django dengan Tailwind, dengan memanfaatkan script CDN (Content Delivery Network) dari Tailwind untuk diletakkan di dalam html template Django.
+
+2. Untuk menambahkan styles pada Aplikasi dengan Tailwind dan External CSS, buatlah file `global.css` di folder `/static/css`.
+3. Pada file `global.css`, kita dapat menambahkan kelas custom atau style css yang sudah didefinisikan sendiri.
+4. Ubah file `base.html` agar dapat digunakan dalam template Django, menjadi seperti ini
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %} {% endblock meta %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+  </head>
+  <body>
+    {% block content %} {% endblock content %}
+  </body>
+</html>
+```
+5. Berikut contoh custom styling pada `global.css` 
+```css
+/* Color Palette */
+:root {
+    --color-white: #ffffff;
+    --color-light-pink-1: #fef0f5; /* Very light pink */
+    --color-light-pink-2: #ffd7e3; /* Pastel pink */
+    --color-pink-1: #ffbdd3; /* Cotton candy pink */
+    --color-pink-2: #ffa3c2; /* Carnation pink */
+}
+
+/* Form Styles */
+.form-style form input, 
+.form-style form textarea, 
+.form-style form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--color-pink-1); /* Pinkish Border */
+    border-radius: 0.5rem; /* Slightly more rounded */
+    background-color: var(--color-light-pink-1); /* Light pink background for inputs */
+    color: #333; /* Text color */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.form-style form input:focus, 
+.form-style form textarea:focus, 
+.form-style form select:focus {
+    outline: none;
+    border-color: var(--color-pink-2); /* Pink border on focus */
+    box-shadow: 0 0 0 3px rgba(255, 163, 194, 0.4); /* Pink glow */
+    background-color: #fff; /* Change background to white on focus */
+}
+
+/* Animation for shine effect */
+@keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.animate-shine {
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), rgba(255, 163, 194, 0.2) 50%, rgba(255, 255, 255, 0.4));
+    background-size: 200% 100%;
+    animation: shine 3s infinite linear;
+}
+
+/* General Button Style */
+button {
+    background-color: var(--color-pink-2); /* Pink background */
+    color: white; /* White text */
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--color-pink-1); /* Lighter pink on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 8px 15px rgba(255, 173, 196, 0.3); /* Shadow on hover */
+}
+
+/* Custom Styles for text input placeholders */
+::placeholder {
+    color: var(--color-pink-1); /* Light pink for placeholders */
+    opacity: 0.7;
+}
+
+/* Form label styles */
+.form-style form label {
+    font-weight: 600;
+    color: var(--color-pink-2); /* Pink for form labels */
+    margin-bottom: 0.5rem;
+}
+
+/* Ratings Bar */
+.ratings-bar {
+    background-color: var(--color-light-pink-1); /* Light pink background for the bar */
+    border-radius: 0.5rem;
+}
+
+.ratings-fill {
+    background-color: var(--color-pink-2); /* Pink for the filled part */
+    height: 100%;
+    border-radius: 0.5rem;
+}
+```
+**Kustomisasi halaman *login*, *register*, dan *add* product semenarik mungkin.**
+1. Halaman `login`, `register`, dan `add` product dikustomisasi melalui *Tailwind* yang dapat di-search untuk manualnya, contohnya : `login.html`
+<details> 
+  <summary> Kode `Login.html`</summary>
+  ```html
+  {% extends 'base.html' %}
+  {% load static %}
+
+  {% block meta %}
+  <title>Login</title>
+  {% endblock meta %}
+
+  {% block content %}
+  <div class="min-h-screen flex items-center justify-center w-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 form-style">
+      <div>
+        <!-- Logo and Title -->
+        <img src="{% static 'image/logo.png' %}" alt="Logo" class="mx-auto w-20 h-20 mb-4"> 
+        <h1 class="text-4xl font-bold text-center text-black-600">MAKE me UP</h1>
+      </div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-pink-600">
+        Login to your account
+      </h2>
+      <form class="mt-8 space-y-6" method="POST" action="">
+        {% csrf_token %}
+        <input type="hidden" name="remember" value="true">
+
+        <!-- Input Fields -->
+        <div class="rounded-md shadow-sm space-y-4">
+          <div>
+            <label for="username" class="font-semibold text-black">Username</label>
+            <div class="relative">
+              <input id="username" name="username" type="text" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Username">
+            </div>
+          </div>
+          <div class="mt-4">
+            <label for="password" class="font-semibold text-black">Password</label>
+            <div class="relative">
+              <input id="password" name="password" type="password" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400">
+            Sign in
+          </button>
+        </div>
+      </form>
+
+      <!-- Messages -->
+      {% if messages %}
+      <div class="mt-4">
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+          </div>
+        {% elif message.tags == "error" %}
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+          </div>
+        {% else %}
+          <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Register Link -->
+      <div class="text-center mt-4">
+        <p class="text-sm text-gray-600">
+          Don't have an account yet?
+          <a href="{% url 'main:register' %}" class="font-medium text-pink-500 hover:text-pink-600">
+            Register Now
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endblock content %}
+  ```
+</details>
+Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya melakukan styling dengan beberapa kelas yang didefinisikan di `global.css` dan juga menggunakan styling dari *Tailwind* untuk desain yang interaktif.
+
+2. Menyesuaikan `register.html` dan `create_product` dengan style CSS dan *Tailwind*diatas agar format web konsisten.
+3. Perlu diperhatikan, jika tambahkan tag {% load static %} pada halaman HTML yang mengakses gambar. 
+
+**Kustomisasi halaman daftar product menjadi lebih menarik dan responsive.**
+1. Agar lebih interaktif dan menarik, jika pada aplikasi belum ada product yang tersimpan, halaman daftar product akan menampilkan gambar dan pesan bahwa belum ada product yang terdaftar.
+2. Jika sudah ada product yang tersimpan, halaman daftar akan menampilkan detail setiap product dengan menggunakan *card*.
+
+3. Untuk halaman main pada aplikasi ini, saya memutuskan untuk menambahkan *Carousel Photo* yang memungkinkan pengguna untuk melihat beberapa gambar secara bergantian, memberikan pengalaman yang lebih dinamis dan menarik. *JavaScript* berperan penting dalam mengendalikan fungsionalitas carousel, seperti peralihan gambar secara otomatis dan pengendalian navigasi (misalnya, tombol "next" dan "previous"). JavaScript digunakan untuk mengontrol transisi antar gambar dalam carousel.
+```html
+<!-- Carousel Section -->
+<div class="relative flex items-center justify-center mb-6 w-full">
+
+  <!-- Prev Button positioned tightly to the left of the carousel -->
+  <button id="prevBtn" class="absolute left-4 transform bg-pink-500 text-white p-5 rounded-full shadow-lg focus:outline-none z-10">&larr;</button> <!-- Updated left positioning -->
+
+  <!-- Carousel Section for Photos -->
+  <div class="relative w-full mx-auto overflow-hidden"> <!-- Changed to w-full -->
+    <div id="carousel-cards" class="flex transition-transform duration-500 ease-in-out">
+      <!-- Card with Image 1 -->
+      <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
+        <img src="{% static 'image/promo1.png' %}" alt="Photo 1" class="w-full h-auto object-cover rounded-lg"/>
+      </div>
+
+      <!-- Card with Image 2 -->
+      <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
+        <img src="{% static 'image/promo2.jpg' %}" alt="Photo 2" class="w-full h-auto object-cover rounded-lg"/>
+      </div>
+
+      <!-- Card with Image 3 -->
+      <div class="bg-white border border-pink-200 shadow-lg rounded-lg p-6 flex items-center justify-center w-full min-w-full flex-shrink-0">
+        <img src="{% static 'image/promo3.jpg' %}" alt="Photo 3" class="w-full h-auto object-cover rounded-lg"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next Button positioned tightly to the right of the carousel -->
+  <button id="nextBtn" class="absolute right-4 transform bg-pink-500 text-white p-5 rounded-full shadow-lg focus:outline-none z-10">&rarr;</button> <!-- Updated right positioning -->
+
+</div> 
+
+<!-- JavaScript for Carousel Controls -->
+<script>
+  const carousel = document.getElementById('carousel-cards');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  let index = 0;
+
+  function autoSwipe() {
+    index = (index + 1) % 3; // Adjust according to number of images
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  let autoSwipeInterval = setInterval(autoSwipe, 3000);
+
+  nextBtn.addEventListener('click', () => {
+    clearInterval(autoSwipeInterval);
+    index = (index + 1) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    autoSwipeInterval = setInterval(autoSwipe, 3000);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    clearInterval(autoSwipeInterval);
+    index = (index - 1 + 3) % 3;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    autoSwipeInterval = setInterval(autoSwipe, 3000);
+  });
+</script>
+```
+4. Untuk *product display*, saya membuat `card_product.html` untuk menampilkan informasi produk dan juga tombol untuk *edit* dan *delete* product yang terhubung juga. 
+```html
+<!-- Products Display -->
+  {% if not products %}
+  <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+    <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+    <p class="text-center text-gray-600 mt-4">Belum ada data product pada MAKE me UP.</p>
+  </div>
+  {% else %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-12">
+    {% for product_entry in products %}
+      {% include 'card_product.html' with product_entry=product_entry %}
+    {% endfor %}
+  </div>
+```
+
+### 3. Untuk Setiap Card Product, Buatlah Dua Buah Button untuk Mengedit dan Menghapus Product ###
+1. Setelah membuat *function* untuk mengedit dan menghapus produk, tambahkan bagian berikut pada `card_product.html` agar dapat diakses / ditekan.
+```html
+  <!-- Edit and Delete Buttons with Icons -->
+  <div class="mt-4 flex space-x-2">
+    <a href="{% url 'main:edit_product' product_entry.pk %}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L7.5 21.036H3v-4.5L16.732 3.732z" />
+      </svg>
+    </a>
+
+    <a href="{% url 'main:delete_product' product_entry.pk %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-1 12a2 2 0 01-2 2H8a2 2 0 01-2-2L5 7m5 4v6m4-6v6M10 3h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4" />
+      </svg>
+    </a>
+  </div>
+```
+
+### 4. Membuat *navigation bar* untuk *mobile* dan *desktop* view ###
+1. Buatlah berkas `navbar.html` pada folder templates/ di root directory.
+2. Styling `navbar.html` sesuai dengan preferensi, gunakan *Tailwind* agar navbar lebih responsif.
+3. Buatlah navbar untuk *desktop* dan *mobile* view seperti ini.
+**Desktop View**
+```html
+<div class="hidden md:flex items-center space-x-4">
+  <!-- Links for Desktop View -->
+  <a href="{% url 'main:home' %}" class="text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+  <a href="{% url 'main:products' %}" class="text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
+
+  <!-- Categories Dropdown -->
+  <div class="relative">
+    <button id="categoryDropdown" class="text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
+      Categories
+      <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <!-- Dropdown Menu -->
+    <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+      <div class="py-1">
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Lip Product</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Eye Product</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Face Product</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Body Care</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Fragrance</a>
+      </div>
+    </div>
+  </div>        
+  {% if user.is_authenticated %}
+    <a href="{% url 'main:user_info' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Welcome, {{ user.username }}</a>
+    <a href="{% url 'main:logout' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
+      Logout
+    </a>
+  {% else %}
+    <a href="{% url 'main:login' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
+      Login
+    </a>
+    <a href="{% url 'main:register' %}" class="text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
+      Register
+    </a>
+  {% endif %}
+</div>
+```
+
+**Mobile View**
+```html
+...
+<!-- Hamburger menu for mobile -->
+      <div class="md:hidden flex items-center">
+        <button class="mobile-menu-button">
+          <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div class="mobile-menu hidden md:hidden px-4 w-full md:max-w-full bg-pink-200">
+    <div class="pt-2 pb-3 space-y-1 mx-auto">
+      <!-- Links for Mobile View -->
+      <a href="{% url 'main:home' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+      <a href="{% url 'main:products' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
+
+      <!-- Mobile Categories Dropdown -->
+      <div class="relative">
+        <button id="mobileCategoryDropdown" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
+          Categories
+          <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileDropdownMenu" class="hidden mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+          <div class="py-1">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Lip Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Eye Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Face Product</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Body Care</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-500 hover:text-white">Fragrance</a>
+          </div>
+        </div>
+      </div>
+            
+      {% if user.is_authenticated %}
+        <a href="{% url 'main:user_info' %}" class="block text-gray-700 hover:bg-pink-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Welcome, {{ user.username }}</a>
+        <a href="{% url 'main:logout' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
+          Logout
+        </a>
+      {% else %}
+        <a href="{% url 'main:login' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+          Login
+        </a>
+        <a href="{% url 'main:register' %}" class="block text-center bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded transition duration-300">
+          Register
+        </a>
+      {% endif %}
+    </div>
+  </div>
+```
+4. Untuk bagian *categories* meskipun belum bisa responsif, saya menambahkan *drop down menu* dengan menggunakan *JavaScript*
+```html
+<script>
+  const btn = document.querySelector("button.mobile-menu-button");
+  const menu = document.querySelector(".mobile-menu");
+
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+  });
+
+  // Dropdown for Categories (Desktop)
+  const categoryDropdown = document.getElementById("categoryDropdown");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+
+  categoryDropdown.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  // Dropdown for Categories (Mobile)
+  const mobileCategoryDropdown = document.getElementById("mobileCategoryDropdown");
+  const mobileDropdownMenu = document.getElementById("mobileDropdownMenu");
+
+  mobileCategoryDropdown.addEventListener("click", () => {
+    mobileDropdownMenu.classList.toggle("hidden");
+  });
+</script>
+```

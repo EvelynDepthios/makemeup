@@ -74,10 +74,8 @@ def logout_user(request):
 def edit_product(request, id):
     # Get product entry berdasarkan id
     product = Product.objects.get(pk = id)
-
     # Set product entry sebagai instance dari form
     form = CreateProductForm(request.POST or None, instance=product)
-
     if form.is_valid() and request.method == "POST":
         # Simpan form dan kembali ke halaman awal
         form.save()
