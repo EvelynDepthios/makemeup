@@ -1174,6 +1174,7 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
 1. Buatlah berkas `navbar.html` pada folder templates/ di root directory.
 2. Styling `navbar.html` sesuai dengan preferensi, gunakan *Tailwind* agar navbar lebih responsif.
 3. Buatlah navbar untuk *desktop* dan *mobile* view seperti ini.
+
 **Desktop View**
 ![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/navbar_desktop.png)
 ```html
