@@ -980,90 +980,89 @@ button:hover {
 ```
 **Kustomisasi halaman *login*, *register*, dan *add* product semenarik mungkin.**
 1. Halaman `login`, `register`, dan `add` product dikustomisasi melalui *Tailwind* yang dapat di-search untuk manualnya, contohnya : `login.html`
-<details> 
-  <summary> Kode `Login.html`</summary>
-  ```html
-  {% extends 'base.html' %}
-  {% load static %}
+```html
+{% extends 'base.html' %}
+{% load static %}
 
-  {% block meta %}
-  <title>Login</title>
-  {% endblock meta %}
+{% block meta %}
+<title>Login</title>
+{% endblock meta %}
 
-  {% block content %}
-  <div class="min-h-screen flex items-center justify-center w-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 form-style">
+{% block content %}
+<div class="min-h-screen flex items-center justify-center w-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-md w-full space-y-8 form-style">
+  <div>
+    <!-- Logo and Title -->
+    <img src="{% static 'image/logo.png' %}" alt="Logo" class="mx-auto w-20 h-20 mb-4"> 
+    <h1 class="text-4xl font-bold text-center text-black-600">MAKE me UP</h1>
+  </div>
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-pink-600">
+    Login to your account
+  </h2>
+  <form class="mt-8 space-y-6" method="POST" action="">
+    {% csrf_token %}
+    <input type="hidden" name="remember" value="true">
+
+    <!-- Input Fields -->
+    <div class="rounded-md shadow-sm space-y-4">
       <div>
-        <!-- Logo and Title -->
-        <img src="{% static 'image/logo.png' %}" alt="Logo" class="mx-auto w-20 h-20 mb-4"> 
-        <h1 class="text-4xl font-bold text-center text-black-600">MAKE me UP</h1>
+        <label for="username" class="font-semibold text-black">Username</label>
+        <div class="relative">
+          <input id="username" name="username" type="text" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Username">
+        </div>
       </div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-pink-600">
-        Login to your account
-      </h2>
-      <form class="mt-8 space-y-6" method="POST" action="">
-        {% csrf_token %}
-        <input type="hidden" name="remember" value="true">
-
-        <!-- Input Fields -->
-        <div class="rounded-md shadow-sm space-y-4">
-          <div>
-            <label for="username" class="font-semibold text-black">Username</label>
-            <div class="relative">
-              <input id="username" name="username" type="text" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Username">
-            </div>
-          </div>
-          <div class="mt-4">
-            <label for="password" class="font-semibold text-black">Password</label>
-            <div class="relative">
-              <input id="password" name="password" type="password" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password">
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div>
-          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400">
-            Sign in
-          </button>
-        </div>
-      </form>
-
-      <!-- Messages -->
-      {% if messages %}
       <div class="mt-4">
-        {% for message in messages %}
-        {% if message.tags == "success" %}
-          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            <span class="block sm:inline">{{ message }}</span>
-          </div>
-        {% elif message.tags == "error" %}
-          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <span class="block sm:inline">{{ message }}</span>
-          </div>
-        {% else %}
-          <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-            <span class="block sm:inline">{{ message }}</span>
-          </div>
-        {% endif %}
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      <!-- Register Link -->
-      <div class="text-center mt-4">
-        <p class="text-sm text-gray-600">
-          Don't have an account yet?
-          <a href="{% url 'main:register' %}" class="font-medium text-pink-500 hover:text-pink-600">
-            Register Now
-          </a>
-        </p>
+        <label for="password" class="font-semibold text-black">Password</label>
+        <div class="relative">
+          <input id="password" name="password" type="password" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password">
+        </div>
       </div>
     </div>
+
+    <!-- Submit Button -->
+    <div>
+      <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400">
+        Sign in
+      </button>
+    </div>
+  </form>
+
+  <!-- Messages -->
+  {% if messages %}
+  <div class="mt-4">
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">{{ message }}</span>
+      </div>
+    {% elif message.tags == "error" %}
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">{{ message }}</span>
+      </div>
+    {% else %}
+      <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">{{ message }}</span>
+      </div>
+    {% endif %}
+    {% endfor %}
   </div>
-  {% endblock content %}
-  ```
-</details>
+  {% endif %}
+
+  <!-- Register Link -->
+  <div class="text-center mt-4">
+    <p class="text-sm text-gray-600">
+      Don't have an account yet?
+      <a href="{% url 'main:register' %}" class="font-medium text-pink-500 hover:text-pink-600">
+        Register Now
+      </a>
+    </p>
+  </div>
+</div>
+</div>
+{% endblock content %}
+```
+![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/login.png)
+
 Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya melakukan styling dengan beberapa kelas yang didefinisikan di `global.css` dan juga menggunakan styling dari *Tailwind* untuk desain yang interaktif.
 
 2. Menyesuaikan `register.html` dan `create_product` dengan style CSS dan *Tailwind*diatas agar format web konsisten.
@@ -1150,6 +1149,7 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
     {% endfor %}
   </div>
 ```
+![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/card_product.png)
 
 ### 3. Untuk Setiap Card Product, Buatlah Dua Buah Button untuk Mengedit dan Menghapus Product ###
 1. Setelah membuat *function* untuk mengedit dan menghapus produk, tambahkan bagian berikut pada `card_product.html` agar dapat diakses / ditekan.
@@ -1175,6 +1175,7 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
 2. Styling `navbar.html` sesuai dengan preferensi, gunakan *Tailwind* agar navbar lebih responsif.
 3. Buatlah navbar untuk *desktop* dan *mobile* view seperti ini.
 **Desktop View**
+![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/navbar_desktop.png)
 ```html
 <div class="hidden md:flex items-center space-x-4">
   <!-- Links for Desktop View -->
@@ -1217,6 +1218,7 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
 ```
 
 **Mobile View**
+![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/navbar_mobile.png)
 ```html
 ...
 <!-- Hamburger menu for mobile -->
