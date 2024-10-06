@@ -12,6 +12,8 @@ Link : http://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id
 
 [Tugas 5](#tugas-5)
 
+[Tugas 6](#tugas-6)
+
 # Tugas 2 #
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial) ##
 
@@ -980,89 +982,90 @@ button:hover {
 ```
 **Kustomisasi halaman *login*, *register*, dan *add* product semenarik mungkin.**
 1. Halaman `login`, `register`, dan `add` product dikustomisasi melalui *Tailwind* yang dapat di-search untuk manualnya, contohnya : `login.html`
-```html
-{% extends 'base.html' %}
-{% load static %}
+<details> 
+  <summary> Kode `Login.html`</summary>
+  ```html
+  {% extends 'base.html' %}
+  {% load static %}
 
-{% block meta %}
-<title>Login</title>
-{% endblock meta %}
+  {% block meta %}
+  <title>Login</title>
+  {% endblock meta %}
 
-{% block content %}
-<div class="min-h-screen flex items-center justify-center w-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
-<div class="max-w-md w-full space-y-8 form-style">
-  <div>
-    <!-- Logo and Title -->
-    <img src="{% static 'image/logo.png' %}" alt="Logo" class="mx-auto w-20 h-20 mb-4"> 
-    <h1 class="text-4xl font-bold text-center text-black-600">MAKE me UP</h1>
-  </div>
-  <h2 class="mt-6 text-center text-3xl font-extrabold text-pink-600">
-    Login to your account
-  </h2>
-  <form class="mt-8 space-y-6" method="POST" action="">
-    {% csrf_token %}
-    <input type="hidden" name="remember" value="true">
-
-    <!-- Input Fields -->
-    <div class="rounded-md shadow-sm space-y-4">
+  {% block content %}
+  <div class="min-h-screen flex items-center justify-center w-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 form-style">
       <div>
-        <label for="username" class="font-semibold text-black">Username</label>
-        <div class="relative">
-          <input id="username" name="username" type="text" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Username">
-        </div>
+        <!-- Logo and Title -->
+        <img src="{% static 'image/logo.png' %}" alt="Logo" class="mx-auto w-20 h-20 mb-4"> 
+        <h1 class="text-4xl font-bold text-center text-black-600">MAKE me UP</h1>
       </div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-pink-600">
+        Login to your account
+      </h2>
+      <form class="mt-8 space-y-6" method="POST" action="">
+        {% csrf_token %}
+        <input type="hidden" name="remember" value="true">
+
+        <!-- Input Fields -->
+        <div class="rounded-md shadow-sm space-y-4">
+          <div>
+            <label for="username" class="font-semibold text-black">Username</label>
+            <div class="relative">
+              <input id="username" name="username" type="text" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Username">
+            </div>
+          </div>
+          <div class="mt-4">
+            <label for="password" class="font-semibold text-black">Password</label>
+            <div class="relative">
+              <input id="password" name="password" type="password" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400">
+            Sign in
+          </button>
+        </div>
+      </form>
+
+      <!-- Messages -->
+      {% if messages %}
       <div class="mt-4">
-        <label for="password" class="font-semibold text-black">Password</label>
-        <div class="relative">
-          <input id="password" name="password" type="password" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-pink-300 placeholder-pink-400 text-gray-900 focus:outline-none focus:ring-pink-400 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password">
-        </div>
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+          </div>
+        {% elif message.tags == "error" %}
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+          </div>
+        {% else %}
+          <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Register Link -->
+      <div class="text-center mt-4">
+        <p class="text-sm text-gray-600">
+          Don't have an account yet?
+          <a href="{% url 'main:register' %}" class="font-medium text-pink-500 hover:text-pink-600">
+            Register Now
+          </a>
+        </p>
       </div>
     </div>
-
-    <!-- Submit Button -->
-    <div>
-      <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400">
-        Sign in
-      </button>
-    </div>
-  </form>
-
-  <!-- Messages -->
-  {% if messages %}
-  <div class="mt-4">
-    {% for message in messages %}
-    {% if message.tags == "success" %}
-      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-        <span class="block sm:inline">{{ message }}</span>
-      </div>
-    {% elif message.tags == "error" %}
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <span class="block sm:inline">{{ message }}</span>
-      </div>
-    {% else %}
-      <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-        <span class="block sm:inline">{{ message }}</span>
-      </div>
-    {% endif %}
-    {% endfor %}
   </div>
-  {% endif %}
-
-  <!-- Register Link -->
-  <div class="text-center mt-4">
-    <p class="text-sm text-gray-600">
-      Don't have an account yet?
-      <a href="{% url 'main:register' %}" class="font-medium text-pink-500 hover:text-pink-600">
-        Register Now
-      </a>
-    </p>
-  </div>
-</div>
-</div>
-{% endblock content %}
-```
-![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/login.png)
-
+  {% endblock content %}
+  ```
+</details>
 Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya melakukan styling dengan beberapa kelas yang didefinisikan di `global.css` dan juga menggunakan styling dari *Tailwind* untuk desain yang interaktif.
 
 2. Menyesuaikan `register.html` dan `create_product` dengan style CSS dan *Tailwind*diatas agar format web konsisten.
@@ -1149,7 +1152,6 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
     {% endfor %}
   </div>
 ```
-![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/card_product.png)
 
 ### 3. Untuk Setiap Card Product, Buatlah Dua Buah Button untuk Mengedit dan Menghapus Product ###
 1. Setelah membuat *function* untuk mengedit dan menghapus produk, tambahkan bagian berikut pada `card_product.html` agar dapat diakses / ditekan.
@@ -1174,9 +1176,7 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
 1. Buatlah berkas `navbar.html` pada folder templates/ di root directory.
 2. Styling `navbar.html` sesuai dengan preferensi, gunakan *Tailwind* agar navbar lebih responsif.
 3. Buatlah navbar untuk *desktop* dan *mobile* view seperti ini.
-
 **Desktop View**
-![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/navbar_desktop.png)
 ```html
 <div class="hidden md:flex items-center space-x-4">
   <!-- Links for Desktop View -->
@@ -1219,7 +1219,6 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
 ```
 
 **Mobile View**
-![image](https://github.com/EvelynDepthios/makemeup/blob/main/images/navbar_mobile.png)
 ```html
 ...
 <!-- Hamburger menu for mobile -->
@@ -1302,3 +1301,102 @@ Secara garis besar, saya menerapkan palette color dari `global.css` dan sisanya 
   });
 </script>
 ```
+
+# Tugas 6 #
+## Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+1. **Membuat Website Lebih Menarik**  
+JavaScript memungkinkan pengembang untuk membuat aplikasi web yang interaktif dan dinamis. Dengan JavaScript, elemen pada halaman web dapat merespons interaksi pengguna secara langsung, misalnya dengan menambahkan animasi, validasi form, atau pembaruan konten tanpa perlu memuat ulang halaman.
+
+2. **Pengembangan Front-End dan Back-End**  
+Awalnya JavaScript hanya digunakan di sisi klien (front-end), tetapi dengan hadirnya Node.js, JavaScript juga dapat digunakan di sisi server (back-end). Hal ini memungkinkan pengembang untuk menggunakan satu bahasa pemrograman di kedua sisi, yang dapat meningkatkan efisiensi pengembangan.
+
+3. **Kompatibilitas di Semua Browser**  
+JavaScript didukung oleh semua browser modern, membuatnya menjadi pilihan utama untuk meningkatkan pengalaman pengguna tanpa masalah kompatibilitas antar platform.
+
+4. **Mendukung Asynchronous Programming**  
+Dengan JavaScript, pengembang dapat membuat aplikasi web yang cepat dan responsif melalui penggunaan asynchronous programming, seperti AJAX atau Fetch API, untuk memuat data dari server tanpa harus memuat ulang halaman.
+
+5. **Cross-Platform Development**  
+JavaScript tidak hanya terbatas pada pengembangan aplikasi web, tetapi juga dapat digunakan untuk pengembangan aplikasi mobile (seperti dengan React Native) dan aplikasi desktop (seperti dengan Electron), memberikan fleksibilitas yang besar bagi pengembang.
+
+Source : https://developer.mozilla.org/en-US/docs/Web/JavaScript, https://www.w3schools.com/js/js_intro.asp
+
+## Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+Fungsi dari penggunaan `await` ketika menggunakan `fetch()` adalah untuk menunggu hingga *Promise* yang dihasilkan oleh `fetch()` selesai. Dalam hal ini, `await` memastikan bahwa JavaScript menunggu hingga data dari `fetch()` selesai diambil sebelum melanjutkan ke kode berikutnya. Ini penting karena operasi `fetch()` bersifat *asynchronous*, artinya, permintaan HTTP akan dilakukan di latar belakang, dan JavaScript tidak akan menunggu secara default.
+
+### Penjelasan Fungsi `await` pada `fetch()`:
+```javascript
+async function getData() {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  console.log(data);
+}
+```
+
+Dalam contoh di atas:
+1. `await fetch('https://api.example.com/data')` menunggu hingga `fetch()` selesai mengambil data dari URL yang diberikan.
+2. Setelah selesai, `response` akan diisi dengan hasil permintaan HTTP tersebut.
+3. Proses parsing `response` ke format JSON menggunakan `await response.json()` juga dilakukan setelah data sepenuhnya diambil.
+
+### Apa yang Terjadi Jika Tidak Menggunakan `await`?
+
+Jika tidak menggunakan `await`, fungsi `fetch()` akan langsung mengembalikan sebuah **Promise** yang belum selesai. Ini dapat menyebabkan masalah jika Anda mencoba menggunakan data sebelum proses pengambilan selesai. Sebagai contoh:
+
+```javascript
+function getData() {
+  const response = fetch('https://api.example.com/data');
+  console.log(response);  // Ini akan mencetak sebuah Promise, bukan hasil data.
+}
+```
+
+Dalam kode di atas, `console.log(response)` akan mencetak **Promise** yang masih pending (belum selesai) karena `fetch()` belum selesai mengambil data. Anda tidak akan mendapatkan data yang sesungguhnya sampai Promise tersebut selesai, sehingga pemrosesan data tidak bisa dilakukan secara langsung.
+
+- **Dengan `await`:** JavaScript akan menunggu hasil dari `fetch()` sebelum melanjutkan eksekusi.
+- **Tanpa `await`:** Anda hanya akan mendapatkan Promise yang belum selesai dan harus menanganinya dengan cara lain, misalnya dengan `.then()`.
+
+Menggunakan `await` adalah cara yang lebih sederhana dan lebih mudah dibaca dibandingkan dengan pendekatan `then()` pada **Promises**.
+
+Source : https://www.w3schools.com/js/js_async.asp, https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+ 
+## Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Kita perlu menggunakan decorator `@csrf_exempt` pada view yang akan digunakan untuk *AJAX POST* dalam situasi tertentu untuk menonaktifkan mekanisme **Cross-Site Request Forgery (CSRF) protection** pada view tersebut. Berikut alasannya:
+1. **CSRF Protection Secara Default**  
+Django memiliki *CSRF protection* secara default untuk semua request POST, terutama untuk melindungi aplikasi dari serangan CSRF. CSRF adalah serangan yang memanfaatkan kepercayaan pengguna yang telah login terhadap situs tertentu untuk mengirimkan permintaan berbahaya tanpa sepengetahuan pengguna.
+
+2. **AJAX POST Request**  
+Ketika mengirimkan request POST melalui AJAX, seringkali CSRF token harus disertakan dalam request agar permintaan POST diizinkan oleh Django. Jika CSRF token tidak disertakan atau tidak dikonfigurasi dengan benar, Django akan memblokir request POST dan mengembalikan error **403 Forbidden**.
+
+3. **Penggunaan `@csrf_exempt`**  
+`@csrf_exempt` digunakan untuk menonaktifkan pemeriksaan CSRF hanya pada view tertentu. Ini bisa diperlukan dalam situasi di mana kita tidak bisa atau tidak ingin menangani token CSRF di sisi klien, misalnya untuk request API atau AJAX tertentu.
+
+4. **Risiko Penggunaan `@csrf_exempt`**  
+Menggunakan `@csrf_exempt` berarti kita menonaktifkan proteksi keamanan CSRF pada view tersebut. Oleh karena itu, kita harus berhati-hati dan memastikan view yang diberi decorator `@csrf_exempt` hanya digunakan dalam konteks yang aman, seperti untuk endpoint API yang memerlukan autentikasi lain atau di mana tidak ada risiko serangan CSRF.
+
+Source : https://docs.djangoproject.com/en/5.1/ref/csrf/,https://developer.mozilla.org/en-US/docs/Glossary/CSRF
+ 
+## Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+1. **Keamanan Data yang Lebih Terjamin**  
+Frontend (misalnya, melalui JavaScript) berjalan di browser pengguna, dan pengguna bisa memodifikasi kode frontend, mengabaikan validasi atau bahkan memasukkan data yang tidak aman. Oleh karena itu, jika validasi hanya dilakukan di frontend, aplikasi masih rentan terhadap serangan seperti **SQL injection**, **XSS (Cross-Site Scripting)**, dan berbagai bentuk lainnya. Backend adalah tempat yang aman karena pengguna tidak dapat mengubah kode server.
+
+2. **Menjaga Integritas dan Konsistensi**  
+Validasi di frontend dapat dihindari atau dimanipulasi, sementara backend tidak bisa diakses langsung oleh pengguna, sehingga pembersihan data di backend memastikan integritas data yang masuk ke sistem tetap terjaga. Ini membantu memastikan data yang diterima oleh aplikasi adalah data yang bersih dan valid, meskipun ada upaya manipulasi dari sisi klien.
+
+3. **Konsistensi Antar Platform**  
+Jika aplikasi web Anda memiliki berbagai klien (seperti mobile apps, third-party API clients, atau command-line tools), melakukan validasi di backend memastikan bahwa aturan validasi diterapkan secara konsisten di semua platform, bukan hanya di satu antarmuka.
+
+4. **Frontend untuk Pengalaman Pengguna (UX)**  
+Meskipun validasi di frontend bermanfaat untuk memberikan pengalaman pengguna yang lebih baik dengan memberikan umpan balik secara langsung, tetap penting untuk menganggap frontend hanya sebagai lapisan pertama validasi. Backend harus tetap bertanggung jawab untuk memastikan bahwa input yang diterima sepenuhnya aman.
+
+Source : https://docs.djangoproject.com/en/5.1/topics/security/, https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+ 
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+### AJAX GET
+Ubahlah kode cards data mood agar dapat mendukung AJAX GET.
+Lakukan pengambilan data mood menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in.
+ 
+### AJAX POST
+Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan mood.
+Buatlah fungsi view baru untuk menambahkan mood baru ke dalam basis data.
+Buatlah path /create-ajax/ yang mengarah ke fungsi view yang baru kamu buat.
+Hubungkan form yang telah kamu buat di dalam modal kamu ke path /create-ajax/.
+Lakukan refresh pada halaman utama secara asinkronus untuk menampilkan daftar mood terbaru tanpa reload halaman utama secara keseluruhan.
