@@ -57,7 +57,6 @@ def create_product_entry_ajax(request):
         ratings=ratings
     )
     product_entry.save()
-
     return HttpResponse(b"CREATED", status=201)
 
 
@@ -137,7 +136,6 @@ def edit_user_info(request):
         return redirect('user_info')
 
     return render(request, 'edit_user_info.html')
-
 
 def show_xml(request):
     data = Product.objects.filter(user=request.user)

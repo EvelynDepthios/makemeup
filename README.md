@@ -1,6 +1,6 @@
-Nama        : Evelyn Depthios <br />
-NPM         : 2306207543 <br />
-Kelas       : PBP F <br />
+**Nama        : Evelyn Depthios <br />**
+**NPM         : 2306207543 <br />**
+**Kelas       : PBP F <br />**
 
 Link : http://evelyn-depthios-makemeup2.pbp.cs.ui.ac.id
 
@@ -1391,12 +1391,12 @@ Source : https://docs.djangoproject.com/en/5.1/topics/security/, https://cheatsh
  
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 ### AJAX GET
-Ubahlah kode cards data mood agar dapat mendukung AJAX GET.
-Lakukan pengambilan data mood menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in.
+Ubahlah kode cards data product agar dapat mendukung AJAX GET.
+Lakukan pengambilan data product menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in.
  
 ### AJAX POST
-Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan mood.
-Buatlah fungsi view baru untuk menambahkan mood baru ke dalam basis data.
+Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan product.
+Buatlah fungsi view baru untuk menambahkan product baru ke dalam basis data.
 Buatlah path /create-ajax/ yang mengarah ke fungsi view yang baru kamu buat.
-Hubungkan form yang telah kamu buat di dalam modal kamu ke path /create-ajax/.
+Hubungkan form yang telah dibuat di dalam modal kamu ke path /create-ajax/.
 Lakukan refresh pada halaman utama secara asinkronus untuk menampilkan daftar mood terbaru tanpa reload halaman utama secara keseluruhan.

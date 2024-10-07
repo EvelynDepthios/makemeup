@@ -10,7 +10,7 @@
 <!-- Include Navbar -->
 {% include 'navbar.html' %}
 
-<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gradient-to-b from-pink-50 via-pink-100 to-pink-200 flex flex-col">
+<div class="overflow-x-hidden px-4 md:px-8 pb-32 pt-24 min-h-screen bg-gradient-to-b from-pink-50 via-pink-100 to-pink-200 flex flex-col">
   
   <!-- Carousel Section -->
   <div class="relative flex items-center justify-center mb-6 w-full">
@@ -64,7 +64,6 @@
       <a href="{% url 'main:create_product_entry' %}" class="bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
         Add New Product Entry
       </a>
-
       <!-- Add New Product by AJAX Button -->
       <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-gradient-to-r from-pink-500 via-pink-400 to-pink-300 hover:from-pink-300 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg" onclick="showModal();">
         Add New Product Entry by AJAX
@@ -74,9 +73,9 @@
 
   
   <!-- Products Display -->
-  <div id="product_entry_cards"></div>
+  <div id="product_entry_cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 w-full mb-12"></div>
   <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
-    <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+    <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out max-h-[90vh] overflow-y-auto">
       <!-- Modal header -->
       <div class="flex items-center justify-between p-4 border-b rounded-t">
         <h3 class="text-xl font-semibold text-gray-900">
@@ -90,19 +89,19 @@
         </button>
       </div>
       <!-- Modal body -->
-      <div class="px-6 py-4 space-y-6 form-style">
+      <div class="px-6 py-4 space-y-6 form-style max-h-[70vh] overflow-y-auto">
         <form id="productEntryForm" method="POST">
           {% csrf_token %}
           <div class="mb-4">
             <label for="brand_name" class="block text-sm font-medium text-gray-700">Brand Name</label>
             <input type="text" id="brand_name" name="brand_name" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-pink-700" placeholder="Enter brand name" required>
           </div>
-          
+
           <div class="mb-4">
             <label for="product_name" class="block text-sm font-medium text-gray-700">Product Name</label>
             <input type="text" id="product_name" name="product_name" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-pink-700" placeholder="Enter product name" required>
           </div>
-  
+
           <div class="mb-4">
             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
             <textarea id="description" name="description" rows="3" class="mt-1 block w-full resize-none border border-gray-300 rounded-md p-2 hover:border-pink-700" placeholder="Enter product description" required></textarea>
@@ -119,7 +118,7 @@
               <option value="Fragrance">Fragrance</option>
             </select>
           </div>
-  
+
           <div class="mb-4">
             <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
             <div class="flex">
@@ -129,7 +128,7 @@
               <input type="number" id="price" name="price" class="form-input w-full rounded-r-md border-pink-300 focus:ring-pink-500 focus:border-pink-500" placeholder="Enter price" required>
             </div>
           </div>
-  
+
           <div class="mb-4">
             <label for="ratings" class="block text-sm font-medium text-gray-700">Ratings (1-5)</label>
             <input type="number" id="ratings" name="ratings" min="1" max="5" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-pink-700" placeholder="Enter product rating" required>
@@ -181,13 +180,13 @@
             </div>
         `;
     } else {
-      classNameString = "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full"
+      classNameString = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 w-full";
       productEntries.forEach((item) => {
           const brand = DOMPurify.sanitize(item.fields.brand);
           const product_name = DOMPurify.sanitize(item.fields.product_name);
           const description = DOMPurify.sanitize(item.fields.description);
           htmlString += `
-          <div class="relative bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col justify-between border border-pink-200">
+          <div class="relative bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col justify-between border border-pink-200 w-full">
               <div class="absolute top-4 right-4">
                   <span class="bg-pink-100 text-pink-500 text-xs font-bold py-1 px-2 rounded-full">${item.fields.category}</span>
               </div>
@@ -210,7 +209,7 @@
                       </svg>
                       Edit
                   </a>
-                  <a href="/delete-product/${item.pk}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg flex items-center">
+                  <a href="/delete/${item.pk}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                           <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                       </svg>
@@ -265,6 +264,7 @@
 
   document.getElementById("cancelButton").addEventListener("click", hideModal);
   document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+  refreshProductEntries();
 
   function createProductEntry() {
     fetch("{% url 'main:create_product_entry_ajax' %}", {
@@ -282,8 +282,8 @@
   document.getElementById("productEntryForm").addEventListener("submit", (e) => {
     e.preventDefault();
     createProductEntry();
-    refreshProductEntries()
-  })
+    
+  });
 
   // Carousel Controls
   const carousel = document.getElementById('carousel-cards');

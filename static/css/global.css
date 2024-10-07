@@ -70,3 +70,7 @@ button:hover {
     color: var(--color-pink-2); /* Pink for form labels */
     margin-bottom: 0.5rem;
 }
+
+.modal-body {
+    padding-bottom: 16px; /* Tambah padding agar ada ruang antara konten dan tombol */
+  }  
