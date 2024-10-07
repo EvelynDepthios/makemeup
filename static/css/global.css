@@ -70,15 +70,3 @@ button:hover {
     color: var(--color-pink-2); /* Pink for form labels */
     margin-bottom: 0.5rem;
 }
-
-/* Ratings Bar */
-.ratings-bar {
-    background-color: var(--color-light-pink-1); /* Light pink background for the bar */
-    border-radius: 0.5rem;
-}
-
-.ratings-fill {
-    background-color: var(--color-pink-2); /* Pink for the filled part */
-    height: 100%;
-    border-radius: 0.5rem;
-}
