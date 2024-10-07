@@ -16,7 +16,7 @@ class CreateProductForm(ModelForm):
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, required=True, widget=forms.Select(attrs={'class': 'form-select'}))
     class Meta:
         model = Product
-        fields = ["brand","product_name", "price", "description", "category", "ratings"]
+        fields = ["brand","product_name", "description", "category", "price", "ratings"]
         widgets = {
             'price': forms.TextInput(attrs={'class': 'form-input w-full rounded-r-md border-gray-300'}),
         }

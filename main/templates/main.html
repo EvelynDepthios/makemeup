@@ -167,7 +167,6 @@
     document.getElementById("product_entry_cards").innerHTML = "";
     document.getElementById("product_entry_cards").className = "";
     const productEntries = await getProductEntries();
-    
     let htmlString = "";
     let classNameString = "";
 
@@ -186,7 +185,7 @@
           const product_name = DOMPurify.sanitize(item.fields.product_name);
           const description = DOMPurify.sanitize(item.fields.description);
           htmlString += `
-          <div class="relative bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col justify-between border border-pink-200 w-full">
+          <div class="relative bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col justify-between border border-pink-200 w-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <div class="absolute top-4 right-4">
                   <span class="bg-pink-100 text-pink-500 text-xs font-bold py-1 px-2 rounded-full">${item.fields.category}</span>
               </div>
@@ -223,6 +222,8 @@
     document.getElementById("product_entry_cards").className = classNameString;
     document.getElementById("product_entry_cards").innerHTML = htmlString;
   }
+
+  refreshProductEntries();
 
   function generateStarRating(rating) {
     let stars = '';
@@ -264,7 +265,6 @@
 
   document.getElementById("cancelButton").addEventListener("click", hideModal);
   document.getElementById("closeModalBtn").addEventListener("click", hideModal);
-  refreshProductEntries();
 
   function createProductEntry() {
     fetch("{% url 'main:create_product_entry_ajax' %}", {
@@ -282,8 +282,7 @@
   document.getElementById("productEntryForm").addEventListener("submit", (e) => {
     e.preventDefault();
     createProductEntry();
-    
-  });
+  })
 
   // Carousel Controls
   const carousel = document.getElementById('carousel-cards');

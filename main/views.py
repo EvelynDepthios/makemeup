@@ -46,9 +46,10 @@ def create_product_entry_ajax(request):
     description = strip_tags(request.POST.get('description'))
     category = request.POST.get('category')
     ratings = request.POST.get('ratings')
+    user = request.user
 
     product_entry = Product(
-        user=request.user,
+        user=user,
         brand=brand,
         product_name=product_name,
         price=price,
@@ -57,6 +58,7 @@ def create_product_entry_ajax(request):
         ratings=ratings
     )
     product_entry.save()
+    
     return HttpResponse(b"CREATED", status=201)
 
 
