@@ -11,7 +11,7 @@
   <h4 class="text-lg font-medium text-gray-800">{{ product_entry.product_name }}</h4>
 
   <!-- Product Description -->
-  <p class="text-gray-500">{{ product_entry.description }}</p>
+  <p class="text-gray-500">{{ product_entry.description|slice:":50" }}{% if product_entry.description|length > 50 %}...{% endif %}</p>
 
   <!-- Product Price -->
   <div class="mt-4">
